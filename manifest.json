@@ -1,0 +1,15 @@
+{
+  "name": "Lucy Vocab",
+  "short_name": "Vocab",
+  "icons": [
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "lucy-vocab.html",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#667eea"
+}
