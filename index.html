@@ -106,7 +106,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;-webkit-tap-h
 .quiz-timer .fill.urgent{background:var(--red)}
 .quiz-options{display:flex;flex-direction:column;gap:10px;padding:0 8px}
 .quiz-options button{padding:18px 22px;border-radius:14px;background:var(--surface);color:var(--text);font-size:1.15rem;text-align:left;transition:all .15s;border:2px solid transparent}
-.quiz-options button:hover{background:var(--surface2);border-color:var(--accent)}
+@media(hover:hover){.quiz-options button:hover{background:var(--surface2);border-color:var(--accent)}}
 .quiz-options button.correct{background:rgba(0,230,118,.15);border-color:var(--green);color:var(--green)}
 .quiz-options button.wrong{background:rgba(255,82,82,.15);border-color:var(--red);color:var(--red)}
 .quiz-options button:disabled{cursor:default;opacity:.85}
