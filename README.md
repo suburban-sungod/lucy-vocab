@@ -46,7 +46,7 @@ Each word has: characters, pinyin, English meaning.
 - Prominent mastery overview at top of app with color-segmented progress bar. Reflects the active set filter (e.g. "5 / 15 words mastered" when viewing Week 3A-4B)
 - Visual mastery states that decay over time: mastered (green, <7 days), fading (amber, 7-14 days stale), needs review (red, 14+ days stale), learning (purple), unseen (grey)
 - "Practice 5 hardest words" button always visible, picks weakest/stalest words and launches flashcards
-- Words/progress tab accessed via 📊 icon in header top-right. Tap any word to see full stats (streak, accuracy, times seen, last practiced) plus audio and a practice button
+- Words/progress tab accessed via bar chart icon in header top-right (SVG, inherits theme color). Tap any word to see full stats (streak, accuracy, times seen, last practiced) plus audio and a practice button
 
 ### Spaced repetition
 Words are weighted by: days since last correct answer, wrong ratio, mastery staleness. Unseen words get highest priority. Mastered words resurface after 3-7 days to prevent forgetting. Applied to flashcard deck building, match and speed question selection.
