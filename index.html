@@ -22,7 +22,9 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;-webkit-tap-h
 .app{max-width:480px;margin:0 auto;padding:16px;min-height:100dvh;display:flex;flex-direction:column}
 
 /* Header */
-.header{text-align:center;padding:12px 0 8px}
+.header{text-align:center;padding:12px 0 8px;position:relative}
+.stats-btn{position:absolute;right:0;top:10px;width:36px;height:36px;border-radius:10px;background:var(--surface);color:var(--text2);font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.stats-btn.active{background:var(--accent);color:#fff}
 .header h1{font-size:1.4rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .header .sub{font-size:.75rem;color:var(--text2);margin-top:2px}
 
@@ -332,7 +334,8 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;-webkit-tap-h
 .badge-toast .bt-emoji{font-size:1.3rem}
 
 /* Theme picker */
-.theme-picker{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:4px 0}
+.theme-picker{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:4px 0;align-items:center}
+.theme-hint{font-size:.65rem;color:var(--text2);text-align:center;margin-top:4px;width:100%}
 .theme-dot{width:32px;height:32px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:all .2s;position:relative;display:flex;align-items:center;justify-content:center;font-size:.7rem}
 .theme-dot.active{border-color:var(--gold);box-shadow:0 0 8px rgba(255,215,0,.3)}
 .theme-dot.locked{opacity:.4;cursor:default;filter:grayscale(1)}
@@ -363,6 +366,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;-webkit-tap-h
   <div class="header">
     <h1><span class="sadie-thumb-wrap" id="sadieThumbWrap"><img class="sadie-thumb sleeping" id="sadieThumb" width="32" height="32"><span class="sadie-thumb-state" id="sadieThumbState">💤</span></span>Lucy's Chinese Vocab</h1>
     <div class="sub" id="levelTitle">Beginner</div>
+    <button class="stats-btn" id="statsBtn" title="Progress">📊</button>
   </div>
 
   <div class="mastery-overview" id="masteryOverview">
@@ -398,7 +402,6 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;-webkit-tap-h
     <button data-mode="speed">Speed</button>
     <button data-mode="context">Context</button>
     <button data-mode="pairs">Pairs</button>
-    <button data-mode="words">Words</button>
   </div>
 
   <div class="set-filter">
@@ -999,6 +1002,17 @@ function renderThemePicker(){
     }
     container.appendChild(dot);
   }
+  // Show unlock hint for next locked theme
+  const nextLocked=THEMES.find(t=>t.badge && !state.unlockedThemes.includes(t.id));
+  if(nextLocked){
+    const badge=BADGES.find(b=>b.id===nextLocked.badge);
+    if(badge){
+      const hint=document.createElement('div');
+      hint.className='theme-hint';
+      hint.textContent='Next: '+nextLocked.name+' — '+badge.desc;
+      container.appendChild(hint);
+    }
+  }
 }
 
 function renderBadgeGrid(){
@@ -1062,12 +1076,15 @@ function getFilteredWords(){
 // ===== UI UPDATE =====
 function updateUI(){
   const lvl=getLevel();const next=getNextLevel();
-  const counts=getMasteryCounts();
+  const filtered=getFilteredWords();
+  const total=filtered.length;
+  const counts={mastered:0,fading:0,learning:0,unseen:0,'needs-review':0};
+  for(const w of filtered) counts[getMasteryState(w.hanzi)]++;
   const solidMastered=counts.mastered;
-  const total=WORDS.length;
   const pct=Math.round(solidMastered/total*100);
   // Mastery overview
   document.getElementById('masteredNum').textContent=solidMastered;
+  document.querySelector('.count-total').textContent='/ '+total+' words mastered';
   const segs=document.getElementById('masterySegments').children;
   segs[0].style.width=(counts.mastered/total*100)+'%';
   segs[1].style.width=(counts.fading/total*100)+'%';
@@ -1121,10 +1138,12 @@ const modeEls={
 document.querySelectorAll('.nav button').forEach(btn=>{
   btn.addEventListener('click',()=>switchMode(btn.dataset.mode));
 });
+document.getElementById('statsBtn').addEventListener('click',()=>switchMode('words'));
 
 function switchMode(mode){
   currentMode=mode;
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
+  document.getElementById('statsBtn').classList.toggle('active',mode==='words');
   for(const m of modes) modeEls[m].classList.toggle('hidden',m!==mode);
   clearInterval(matchTimer);clearInterval(speedInterval);clearInterval(contextTimer);clearInterval(pairsInterval);
   if(mode==='flashcard') initFlashcards();
