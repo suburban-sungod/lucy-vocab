@@ -26,11 +26,6 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;-webkit-tap-h
 .header h1{font-size:1.4rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .header .sub{font-size:.75rem;color:var(--text2);margin-top:2px}
 
-/* Stats bar */
-.stats-bar{display:flex;justify-content:center;gap:16px;padding:8px 0;flex-wrap:wrap}
-.stat{text-align:center}
-.stat .val{font-size:1.1rem;font-weight:700;color:var(--gold)}
-.stat .lbl{font-size:.65rem;color:var(--text2);text-transform:uppercase;letter-spacing:.5px}
 
 /* Level bar */
 .level-bar{margin:8px 0 12px;padding:8px 16px;background:var(--surface);border-radius:var(--radius);display:flex;align-items:center;gap:12px}
@@ -119,27 +114,48 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;-webkit-tap-h
 .speed-header .timer.low{color:var(--red);animation:pulse .5s ease infinite}
 .speed-header .score{font-size:1.2rem;font-weight:700;color:var(--gold)}
 
-/* Draw mode */
-.draw-area{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0}
-.draw-prompt{text-align:center;margin-bottom:12px}
-.draw-prompt .draw-english{font-size:1.1rem;color:var(--text2);margin-bottom:4px}
-.draw-prompt .draw-pinyin{font-size:1.3rem;color:var(--accent);font-weight:600}
-.draw-prompt .draw-audio-row{display:flex;justify-content:center;gap:10px;margin-top:8px}
-.canvas-wrap{position:relative;width:min(90vw,420px);height:min(90vw,420px);margin:0 auto;border-radius:20px;overflow:hidden;background:var(--surface);border:2px solid var(--surface2);touch-action:none}
-.canvas-wrap canvas{position:absolute;top:0;left:0;width:100%;height:100%}
-#drawGuide{opacity:0.12;pointer-events:none}
-#drawCanvas{cursor:crosshair}
-.draw-controls{display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap}
-.draw-controls button{padding:10px 20px;border-radius:12px;font-size:.8rem;font-weight:600;transition:all .2s}
-.draw-controls .btn-check{background:var(--accent);color:#fff}
-.draw-controls .btn-clear{background:var(--surface);color:var(--text2)}
-.draw-controls .btn-next{background:rgba(0,230,118,.15);color:var(--green)}
-.draw-controls .btn-guide{background:var(--surface);color:var(--text2);font-size:.7rem;padding:8px 14px}
-.draw-controls .btn-guide.on{background:rgba(124,92,252,.2);color:var(--accent)}
-.draw-score{text-align:center;margin-top:12px;font-size:1rem;font-weight:700;min-height:28px}
-.draw-score .score-val{font-size:1.8rem}
-.draw-score .score-label{font-size:.75rem;color:var(--text2)}
-.draw-counter{text-align:center;font-size:.75rem;color:var(--text2);margin-top:8px}
+/* Mastery overview */
+.mastery-overview{text-align:center;padding:8px 0 4px}
+.mastery-overview .mastery-count{font-size:1.6rem;font-weight:800;color:var(--text)}
+.mastery-overview .mastery-count .count-num{color:var(--green)}
+.mastery-overview .mastery-count .count-total{color:var(--text2);font-weight:600}
+.mastery-overview .mastery-subtitle{font-size:.7rem;color:var(--text2);margin-top:2px}
+.mastery-segments{display:flex;height:8px;border-radius:4px;overflow:hidden;margin:8px 0 4px;background:var(--surface2)}
+.mastery-segments .seg{height:100%;transition:width .5s ease}
+.mastery-segments .seg-mastered{background:var(--green)}
+.mastery-segments .seg-fading{background:#ffb74d}
+.mastery-segments .seg-learning{background:var(--accent)}
+.mastery-segments .seg-unseen{background:var(--surface2)}
+.mastery-legend{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.mastery-legend .leg{font-size:.6rem;color:var(--text2);display:flex;align-items:center;gap:3px}
+.mastery-legend .leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* Practice hardest button */
+.practice-hardest{display:block;width:100%;padding:12px 16px;margin:8px 0 12px;border-radius:14px;background:linear-gradient(135deg,rgba(255,107,157,.15),rgba(124,92,252,.15));border:1px solid rgba(255,107,157,.3);color:var(--text);font-size:.85rem;font-weight:600;text-align:center;transition:all .2s}
+.practice-hardest:hover{background:linear-gradient(135deg,rgba(255,107,157,.25),rgba(124,92,252,.25))}
+.practice-hardest .ph-label{color:var(--accent2)}
+.practice-hardest .ph-sub{font-size:.7rem;color:var(--text2);font-weight:400;margin-top:2px}
+
+/* Word detail overlay */
+.word-detail-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:100;background:rgba(15,15,26,.95);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.word-detail-card{background:var(--surface);border-radius:24px;padding:28px 24px;text-align:center;max-width:360px;width:90%;animation:popIn .4s ease}
+.word-detail-card .wd-hanzi{font-size:3rem;font-weight:700;margin-bottom:8px}
+.word-detail-card .wd-pinyin{font-size:1.2rem;color:var(--accent);margin-bottom:4px}
+.word-detail-card .wd-english{font-size:1rem;color:var(--text2);margin-bottom:16px}
+.word-detail-card .wd-status{display:inline-block;padding:4px 14px;border-radius:20px;font-size:.75rem;font-weight:600;margin-bottom:16px}
+.word-detail-card .wd-status.st-mastered{background:rgba(0,230,118,.15);color:var(--green)}
+.word-detail-card .wd-status.st-fading{background:rgba(255,183,77,.15);color:#ffb74d}
+.word-detail-card .wd-status.st-learning{background:rgba(124,92,252,.15);color:var(--accent)}
+.word-detail-card .wd-status.st-unseen{background:var(--surface2);color:var(--text2)}
+.word-detail-card .wd-status.st-needs-review{background:rgba(255,82,82,.15);color:var(--red)}
+.wd-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:12px 0}
+.wd-stats .wd-stat{text-align:center}
+.wd-stats .wd-stat-val{font-size:1.1rem;font-weight:700;color:var(--gold)}
+.wd-stats .wd-stat-lbl{font-size:.6rem;color:var(--text2);text-transform:uppercase}
+.wd-actions{display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.wd-actions button{padding:10px 20px;border-radius:12px;font-size:.8rem;font-weight:600}
+.wd-actions .wd-practice{background:var(--accent);color:#fff}
+.wd-actions .wd-close{background:var(--surface2);color:var(--text)}
 
 /* Results overlay */
 .results{position:fixed;inset:0;background:rgba(15,15,26,.95);display:flex;align-items:center;justify-content:center;z-index:100;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
@@ -158,11 +174,20 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;-webkit-tap-h
 .dash-card .dash-lbl{font-size:.7rem;color:var(--text2);text-transform:uppercase;letter-spacing:.5px}
 .dash-card.wide{grid-column:1/-1}
 .mastery-grid{margin-top:12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px}
-.mastery-item{background:var(--surface);border-radius:12px;padding:10px 6px;text-align:center;transition:all .2s}
+.mastery-item{background:var(--surface);border-radius:12px;padding:10px 6px;text-align:center;transition:all .2s;cursor:pointer;border:1px solid transparent}
+.mastery-item:active{transform:scale(.95)}
 .mastery-item .mi-hanzi{font-size:1.3rem;margin-bottom:2px}
-.mastery-item .mi-bar{height:3px;background:var(--surface2);border-radius:2px;margin-top:4px;overflow:hidden}
-.mastery-item .mi-fill{height:100%;border-radius:2px;background:var(--green);transition:width .3s}
-.mastery-item.mastered{border:1px solid rgba(0,230,118,.3)}
+.mastery-item .mi-english{font-size:.55rem;color:var(--text2);line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mastery-item .mi-state{width:8px;height:8px;border-radius:50%;margin:4px auto 0}
+.mastery-item.st-mastered{border-color:rgba(0,230,118,.3)}
+.mastery-item.st-mastered .mi-state{background:var(--green)}
+.mastery-item.st-fading{border-color:rgba(255,183,77,.3)}
+.mastery-item.st-fading .mi-state{background:#ffb74d}
+.mastery-item.st-learning{border-color:rgba(124,92,252,.2)}
+.mastery-item.st-learning .mi-state{background:var(--accent)}
+.mastery-item.st-needs-review{border-color:rgba(255,82,82,.3)}
+.mastery-item.st-needs-review .mi-state{background:var(--red)}
+.mastery-item.st-unseen .mi-state{background:var(--surface2)}
 .dash-section-title{font-size:.8rem;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin:16px 0 8px;padding-left:4px}
 .reset-btn{margin-top:20px;padding:10px 24px;border-radius:12px;background:rgba(255,82,82,.1);color:var(--red);font-size:.8rem;font-weight:600;display:block;margin-left:auto;margin-right:auto}
 
@@ -291,21 +316,69 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;-webkit-tap-h
   .flashcard .hanzi{font-size:3rem}
   .quiz-prompt .question{font-size:2.2rem}
   .nav button{padding:7px 10px;font-size:.7rem}
-  .canvas-wrap{width:min(90vw,420px);height:min(90vw,420px)}
+  .mastery-overview .mastery-count{font-size:1.3rem}
 }
+
+/* Theme overrides */
+[data-theme="sakura"]{--accent:#e8789a;--accent2:#ff9bb8}
+[data-theme="ocean"]{--accent:#3db8e8;--accent2:#6dd5fa}
+[data-theme="sunset"]{--accent:#e87830;--accent2:#ffac6e}
+[data-theme="neon"]{--accent:#00e676;--accent2:#69f0ae}
+[data-theme="midnight"]{--accent:#8888cc;--accent2:#b0b0e8}
+
+/* Badge toast */
+.badge-toast{position:fixed;top:0;left:0;right:0;z-index:350;display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 16px;background:linear-gradient(135deg,rgba(124,92,252,.95),rgba(255,107,157,.95));color:#fff;font-size:.85rem;font-weight:600;transform:translateY(-100%);transition:transform .3s ease;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.badge-toast.show{transform:translateY(0)}
+.badge-toast .bt-emoji{font-size:1.3rem}
+
+/* Theme picker */
+.theme-picker{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:4px 0}
+.theme-dot{width:32px;height:32px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:all .2s;position:relative;display:flex;align-items:center;justify-content:center;font-size:.7rem}
+.theme-dot.active{border-color:var(--gold);box-shadow:0 0 8px rgba(255,215,0,.3)}
+.theme-dot.locked{opacity:.4;cursor:default;filter:grayscale(1)}
+.theme-dot.locked::after{content:'🔒';font-size:.55rem;position:absolute}
+
+/* Badge grid */
+.badge-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:4px 0}
+.badge-cell{background:var(--surface);border-radius:12px;padding:10px 4px;text-align:center;transition:all .2s}
+.badge-cell.locked{opacity:.35;filter:grayscale(1)}
+.badge-cell .bc-emoji{font-size:1.5rem;display:block;margin-bottom:2px}
+.badge-cell .bc-name{font-size:.55rem;color:var(--text2);line-height:1.2}
+.badge-cell.earned .bc-name{color:var(--text)}
+
+/* Sadie thumbnail */
+.sadie-thumb{width:32px;height:32px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:6px;transition:all .3s}
+.sadie-thumb.sleeping{opacity:.4;filter:grayscale(1)}
+.sadie-thumb-wrap{display:inline-flex;align-items:center;position:relative}
+.sadie-thumb-state{position:absolute;bottom:-2px;right:-2px;font-size:.7rem;line-height:1}
+
+/* 2x XP golden popup */
+.xp-popup.double{color:var(--gold);font-size:1.6rem;text-shadow:0 0 12px rgba(255,215,0,.5)}
+@keyframes goldenShimmer{0%{box-shadow:0 0 0 0 rgba(255,215,0,.4)}50%{box-shadow:0 0 15px 5px rgba(255,215,0,.2)}100%{box-shadow:0 0 0 0 rgba(255,215,0,0)}}
+.golden-shimmer{animation:goldenShimmer .6s ease}
 </style>
 </head>
 <body>
 <div class="app">
   <div class="header">
-    <h1>Lucy's Chinese Vocab</h1>
+    <h1><span class="sadie-thumb-wrap" id="sadieThumbWrap"><img class="sadie-thumb sleeping" id="sadieThumb" width="32" height="32"><span class="sadie-thumb-state" id="sadieThumbState">💤</span></span>Lucy's Chinese Vocab</h1>
     <div class="sub" id="levelTitle">Beginner</div>
   </div>
 
-  <div class="stats-bar">
-    <div class="stat"><div class="val" id="xpVal">0</div><div class="lbl">XP</div></div>
-    <div class="stat"><div class="val" id="streakVal">0<span style="font-size:.7em">🔥</span></div><div class="lbl">Streak</div></div>
-    <div class="stat"><div class="val" id="masteryVal">0%</div><div class="lbl">Mastered</div></div>
+  <div class="mastery-overview" id="masteryOverview">
+    <div class="mastery-count"><span class="count-num" id="masteredNum">0</span> <span class="count-total">/ 45 words mastered</span></div>
+    <div class="mastery-segments" id="masterySegments">
+      <div class="seg seg-mastered" style="width:0%"></div>
+      <div class="seg seg-fading" style="width:0%"></div>
+      <div class="seg seg-learning" style="width:0%"></div>
+    </div>
+    <div class="mastery-legend">
+      <div class="leg"><div class="leg-dot" style="background:var(--green)"></div><span id="legMastered">0</span> mastered</div>
+      <div class="leg"><div class="leg-dot" style="background:#ffb74d"></div><span id="legFading">0</span> fading</div>
+      <div class="leg"><div class="leg-dot" style="background:var(--accent)"></div><span id="legLearning">0</span> learning</div>
+      <div class="leg"><div class="leg-dot" style="background:var(--surface2)"></div><span id="legUnseen">0</span> unseen</div>
+    </div>
+    <div class="mastery-subtitle" id="masterySubtitle">Keep going!</div>
   </div>
 
   <div class="level-bar">
@@ -314,14 +387,18 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;-webkit-tap-h
     <div class="xp-text" id="xpText">0 / 100</div>
   </div>
 
+  <button class="practice-hardest" id="practiceHardest">
+    <div class="ph-label">Practice 5 hardest words</div>
+    <div class="ph-sub" id="phSub">Your weakest words need attention</div>
+  </button>
+
   <div class="nav">
     <button class="active" data-mode="flashcard">Flashcards</button>
     <button data-mode="match">Match</button>
     <button data-mode="speed">Speed</button>
     <button data-mode="context">Context</button>
     <button data-mode="pairs">Pairs</button>
-    <button data-mode="draw">Draw</button>
-    <button data-mode="stats">Stats</button>
+    <button data-mode="words">Words</button>
   </div>
 
   <div class="set-filter">
@@ -416,44 +493,22 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none;-webkit-tap-h
     </div>
   </div>
 
-  <!-- Draw mode -->
-  <div id="drawMode" class="hidden">
-    <div class="draw-area">
-      <div class="draw-prompt">
-        <div class="draw-english" id="drawEnglish"></div>
-        <div class="draw-pinyin" id="drawPinyin"></div>
-        <div class="draw-audio-row">
-          <button class="audio-btn" id="drawAudio" title="Listen">&#x1f50a;</button>
-        </div>
-      </div>
-      <div class="canvas-wrap" id="canvasWrap">
-        <canvas id="drawGuide" width="420" height="420"></canvas>
-        <canvas id="drawCanvas" width="420" height="420"></canvas>
-      </div>
-      <div class="draw-score" id="drawScoreArea"></div>
-      <div class="draw-controls">
-        <button class="btn-guide" id="btnGuide">Guide</button>
-        <button class="btn-clear" id="btnClear">Clear</button>
-        <button class="btn-check" id="btnCheck">Check</button>
-        <button class="btn-next" id="btnNext">Next</button>
-      </div>
-      <div class="draw-counter" id="drawCounter"></div>
-    </div>
-  </div>
-
-  <!-- Stats dashboard -->
-  <div id="statsMode" class="hidden">
+  <!-- Words dashboard -->
+  <div id="wordsMode" class="hidden">
     <div class="dashboard">
       <div class="dash-grid">
-        <div class="dash-card"><div class="dash-val" id="dMastered" style="color:var(--green)">0</div><div class="dash-lbl">Words Mastered</div></div>
         <div class="dash-card"><div class="dash-val" id="dAccuracy" style="color:var(--accent)">0%</div><div class="dash-lbl">Accuracy</div></div>
         <div class="dash-card"><div class="dash-val" id="dBestStreak" style="color:var(--gold)">0</div><div class="dash-lbl">Best Streak</div></div>
         <div class="dash-card"><div class="dash-val" id="dSessions" style="color:var(--accent2)">0</div><div class="dash-lbl">Sessions</div></div>
-        <div class="dash-card wide"><div class="dash-val" id="dTotalXP" style="color:var(--gold)">0</div><div class="dash-lbl">Total XP Earned</div></div>
+        <div class="dash-card"><div class="dash-val" id="dTotalXP" style="color:var(--gold)">0</div><div class="dash-lbl">Total XP</div></div>
       </div>
+      <div class="dash-section-title">Themes</div>
+      <div class="theme-picker" id="themePicker"></div>
+      <div class="dash-section-title">Achievements</div>
+      <div class="badge-grid" id="badgeGrid"></div>
       <div class="dash-section-title">Daily Streak</div>
       <div class="streak-calendar" id="streakCalendar"></div>
-      <div class="dash-section-title">Word Mastery</div>
+      <div class="dash-section-title">All Words</div>
       <div class="mastery-grid" id="masteryGrid"></div>
       <button class="reset-btn" id="resetBtn">Reset All Progress</button>
     </div>
@@ -585,7 +640,14 @@ function defaultState(){
     dailyHistory:[],
     dailyStreak:0,
     bestDailyStreak:0,
-    dailyRewards:{}
+    dailyRewards:{},
+    badges:{},
+    unlockedThemes:['default'],
+    activeTheme:'default',
+    lastPerfectRound:0,
+    _perfectMatch:false,
+    _perfectContext:false,
+    _lightningPairs:false
   };
 }
 
@@ -599,6 +661,13 @@ function loadState(){
       if(!state.dailyStreak) state.dailyStreak=0;
       if(!state.bestDailyStreak) state.bestDailyStreak=0;
       if(!state.dailyRewards) state.dailyRewards={};
+      if(!state.badges) state.badges={};
+      if(!state.unlockedThemes) state.unlockedThemes=['default'];
+      if(!state.activeTheme) state.activeTheme='default';
+      if(!state.lastPerfectRound) state.lastPerfectRound=0;
+      if(state._perfectMatch===undefined) state._perfectMatch=false;
+      if(state._perfectContext===undefined) state._perfectContext=false;
+      if(state._lightningPairs===undefined) state._lightningPairs=false;
       const today=new Date().toDateString();
       const todayISO=new Date().toISOString().slice(0,10);
       if(state.lastLogin!==today){
@@ -670,6 +739,22 @@ function getWordWeight(hanzi){
     weight+=Math.min(daysSince*0.3,2); // boost for stale words
   }
   return Math.max(weight,0.1);
+}
+
+function getMasteryState(hanzi){
+  const ws=getWordState(hanzi);
+  if(ws.seen===0) return 'unseen';
+  if(!ws.mastered) return 'learning';
+  const daysSince=ws.lastCorrect?Math.floor((Date.now()-ws.lastCorrect)/(1000*60*60*24)):30;
+  if(daysSince>=14) return 'needs-review';
+  if(daysSince>=7) return 'fading';
+  return 'mastered';
+}
+
+function getMasteryCounts(){
+  const counts={mastered:0,fading:0,learning:0,unseen:0,'needs-review':0};
+  for(const w of WORDS) counts[getMasteryState(w.hanzi)]++;
+  return counts;
 }
 
 function weightedRandomWord(pool){
@@ -820,23 +905,186 @@ function showXPPopup(text){
   document.body.appendChild(el);setTimeout(()=>el.remove(),1000);
 }
 
+// ===== SADIE IMAGE =====
+const SADIE_SRC = document.querySelector('.sadie-overlay img').src;
+
+// ===== BADGES =====
+const BADGES = [
+  {id:'firstSteps',emoji:'👣',name:'First Steps',desc:'First correct answer',test:()=>state.totalCorrect>=1},
+  {id:'wordWatcher',emoji:'👀',name:'Word Watcher',desc:'Master first word',test:()=>WORDS.some(w=>getWordState(w.hanzi).mastered)},
+  {id:'halfwayThere',emoji:'🎯',name:'Halfway There',desc:'Master 50% of words',test:()=>WORDS.filter(w=>getWordState(w.hanzi).mastered).length>=Math.ceil(WORDS.length/2)},
+  {id:'wordMaster',emoji:'👑',name:'Word Master',desc:'Master all words',test:()=>WORDS.every(w=>getWordState(w.hanzi).mastered)},
+  {id:'speedDemon',emoji:'⚡',name:'Speed Demon',desc:'15+ in Speed Round',test:()=>state.speedHighScore>=15},
+  {id:'perfectMatch',emoji:'💯',name:'Perfect Match',desc:'15/15 in Match',test:()=>state._perfectMatch},
+  {id:'perfectContext',emoji:'🧩',name:'Perfect Context',desc:'15/15 in Context',test:()=>state._perfectContext},
+  {id:'lightningPairs',emoji:'⚡',name:'Lightning Pairs',desc:'Pairs round under 8s',test:()=>state._lightningPairs},
+  {id:'onFire',emoji:'🔥',name:'On Fire',desc:'10 answer streak',test:()=>state.bestStreak>=10},
+  {id:'blazing',emoji:'🔥',name:'Blazing',desc:'25 answer streak',test:()=>state.bestStreak>=25},
+  {id:'unstoppable',emoji:'💥',name:'Unstoppable',desc:'50 answer streak',test:()=>state.bestStreak>=50},
+  {id:'weekWarrior',emoji:'📅',name:'Week Warrior',desc:'7-day daily streak',test:()=>(state.bestDailyStreak||0)>=7},
+  {id:'fortnightStrong',emoji:'📅',name:'Fortnight Strong',desc:'14-day daily streak',test:()=>(state.bestDailyStreak||0)>=14},
+  {id:'monthOfMastery',emoji:'🏆',name:'Month of Mastery',desc:'30-day daily streak',test:()=>(state.bestDailyStreak||0)>=30},
+  {id:'xpHunter',emoji:'💎',name:'XP Hunter',desc:'500 total XP',test:()=>state.xp>=500},
+  {id:'xpLegend',emoji:'💎',name:'XP Legend',desc:'1000 total XP',test:()=>state.xp>=1000}
+];
+
+// ===== THEMES =====
+const THEMES = [
+  {id:'default',name:'Default',accent:'#7c5cfc',badge:null},
+  {id:'sakura',name:'Sakura',accent:'#e8789a',badge:'wordWatcher'},
+  {id:'ocean',name:'Ocean',accent:'#3db8e8',badge:'perfectMatch'},
+  {id:'sunset',name:'Sunset',accent:'#e87830',badge:'halfwayThere'},
+  {id:'neon',name:'Neon',accent:'#00e676',badge:'xpHunter'},
+  {id:'midnight',name:'Midnight',accent:'#8888cc',badge:'weekWarrior'}
+];
+
+function checkBadges(){
+  let newBadge=null;
+  for(const b of BADGES){
+    if(!state.badges[b.id] && b.test()){
+      state.badges[b.id]=Date.now();
+      newBadge=b;
+      checkThemeUnlocks(b.id);
+    }
+  }
+  if(newBadge){saveState();showBadgeToast(newBadge);}
+}
+
+function showBadgeToast(badge){
+  let toast=document.getElementById('badgeToast');
+  if(!toast){
+    toast=document.createElement('div');
+    toast.id='badgeToast';
+    toast.className='badge-toast';
+    document.body.appendChild(toast);
+  }
+  toast.innerHTML='<span class="bt-emoji">'+badge.emoji+'</span> '+badge.name+' unlocked!';
+  requestAnimationFrame(()=>{toast.classList.add('show');});
+  setTimeout(()=>toast.classList.remove('show'),3000);
+}
+
+function checkThemeUnlocks(badgeId){
+  for(const t of THEMES){
+    if(t.badge===badgeId && !state.unlockedThemes.includes(t.id)){
+      state.unlockedThemes.push(t.id);
+    }
+  }
+}
+
+function applyTheme(id){
+  const theme=THEMES.find(t=>t.id===id);
+  if(!theme || !state.unlockedThemes.includes(id)) return;
+  document.documentElement.setAttribute('data-theme',id==='default'?'':id);
+  state.activeTheme=id;
+  saveState();
+}
+
+function renderThemePicker(){
+  const container=document.getElementById('themePicker');
+  if(!container) return;
+  container.innerHTML='';
+  for(const t of THEMES){
+    const dot=document.createElement('div');
+    dot.className='theme-dot';
+    dot.style.background=t.accent;
+    const unlocked=state.unlockedThemes.includes(t.id);
+    if(!unlocked) dot.classList.add('locked');
+    if(state.activeTheme===t.id) dot.classList.add('active');
+    dot.title=t.name+(unlocked?'':' (locked)');
+    if(unlocked){
+      dot.addEventListener('click',()=>{
+        applyTheme(t.id);
+        renderThemePicker();
+      });
+    }
+    container.appendChild(dot);
+  }
+}
+
+function renderBadgeGrid(){
+  const container=document.getElementById('badgeGrid');
+  if(!container) return;
+  container.innerHTML='';
+  for(const b of BADGES){
+    const cell=document.createElement('div');
+    const earned=!!state.badges[b.id];
+    cell.className='badge-cell'+(earned?' earned':' locked');
+    cell.innerHTML='<span class="bc-emoji">'+(earned?b.emoji:'🔒')+'</span><span class="bc-name">'+b.name+'</span>';
+    cell.title=b.desc;
+    container.appendChild(cell);
+  }
+}
+
+function maybeDoubleXP(baseXP,btnEl){
+  if(Math.random()<0.15){
+    if(btnEl){btnEl.classList.add('golden-shimmer');setTimeout(()=>btnEl.classList.remove('golden-shimmer'),600);}
+    const popup=document.createElement('div');
+    popup.className='xp-popup double';
+    popup.textContent='2x XP!';
+    popup.style.left=Math.random()*40+30+'%';
+    popup.style.top='35%';
+    document.body.appendChild(popup);
+    setTimeout(()=>popup.remove(),1000);
+    return baseXP*2;
+  }
+  return baseXP;
+}
+
+function updateSadieThumb(){
+  const img=document.getElementById('sadieThumb');
+  const stateEl=document.getElementById('sadieThumbState');
+  if(!img||!stateEl) return;
+  img.src=SADIE_SRC;
+  const todayISO=new Date().toISOString().slice(0,10);
+  const practicedToday=(state.dailyHistory||[]).includes(todayISO);
+  const proudRecent=state.lastPerfectRound && (Date.now()-state.lastPerfectRound)<30000;
+  img.classList.remove('sleeping');
+  if(proudRecent){
+    stateEl.textContent='⭐';
+  }else if(state.streak>=5){
+    stateEl.textContent='🔥';
+  }else if(practicedToday){
+    stateEl.textContent='😊';
+  }else{
+    img.classList.add('sleeping');
+    stateEl.textContent='💤';
+  }
+}
+
 // ===== FILTERS =====
 let currentSet='all';
 function getFilteredWords(){
   if(currentSet==='all') return [...WORDS];
-  if(currentSet==='weak') return WORDS.filter(w=>{const ws=getWordState(w.hanzi);return ws.seen>0&&!ws.mastered;});
+  if(currentSet==='weak') return WORDS.filter(w=>{const ms=getMasteryState(w.hanzi);return ms==='learning'||ms==='fading'||ms==='needs-review';});
   return WORDS.filter(w=>w.set===currentSet);
 }
 
 // ===== UI UPDATE =====
 function updateUI(){
   const lvl=getLevel();const next=getNextLevel();
-  document.getElementById('xpVal').textContent=state.xp;
-  document.getElementById('streakVal').innerHTML=state.streak+'<span style="font-size:.7em">🔥</span>';
-  const masteredCount=WORDS.filter(w=>getWordState(w.hanzi).mastered).length;
-  const pct=Math.round(masteredCount/WORDS.length*100);
-  document.getElementById('masteryVal').textContent=pct+'%';
-  document.getElementById('levelTitle').textContent=lvl.name;
+  const counts=getMasteryCounts();
+  const solidMastered=counts.mastered;
+  const total=WORDS.length;
+  const pct=Math.round(solidMastered/total*100);
+  // Mastery overview
+  document.getElementById('masteredNum').textContent=solidMastered;
+  const segs=document.getElementById('masterySegments').children;
+  segs[0].style.width=(counts.mastered/total*100)+'%';
+  segs[1].style.width=(counts.fading/total*100)+'%';
+  segs[2].style.width=((counts.learning+counts['needs-review'])/total*100)+'%';
+  document.getElementById('legMastered').textContent=counts.mastered;
+  document.getElementById('legFading').textContent=counts.fading;
+  document.getElementById('legLearning').textContent=counts.learning+counts['needs-review'];
+  document.getElementById('legUnseen').textContent=counts.unseen;
+  // Subtitle
+  const sub=document.getElementById('masterySubtitle');
+  if(solidMastered===total) sub.textContent='All words mastered!';
+  else if(counts.fading>0) sub.textContent=counts.fading+' word'+(counts.fading>1?'s':'')+' fading — time to review';
+  else if(counts['needs-review']>0) sub.textContent=counts['needs-review']+' word'+(counts['needs-review']>1?'s':'')+' need'+(counts['needs-review']>1?'':'s')+' review';
+  else if(solidMastered>0) sub.textContent=state.xp+' XP — '+lvl.name;
+  else sub.textContent='Start with flashcards!';
+  // Level bar
+  document.getElementById('levelTitle').textContent=lvl.name+' — '+state.xp+' XP';
   document.getElementById('levelName').textContent=lvl.name;
   if(next){
     const progress=((state.xp-lvl.xp)/(next.xp-lvl.xp))*100;
@@ -846,21 +1094,28 @@ function updateUI(){
     document.getElementById('xpFill').style.width='100%';
     document.getElementById('xpText').textContent='MAX';
   }
-  if(pct>=100&&!state._m100){state._m100=true;spawnConfetti(60);showXPPopup('100% Mastery!');}
+  // Practice hardest button subtitle
+  const hardest=getHardestWords(5);
+  if(hardest.length>0){
+    document.getElementById('phSub').textContent=hardest.map(w=>w.hanzi).join('  ');
+  }
+  // Milestones
+  if(pct>=100&&!state._m100){state._m100=true;spawnConfetti(60);showXPPopup('All words mastered!');}
   else if(pct>=50&&!state._m50){state._m50=true;spawnConfetti(40);showXPPopup('50% Mastery!');}
+  checkBadges();
+  updateSadieThumb();
 }
 
 // ===== NAVIGATION =====
 let currentMode='flashcard';
-const modes=['flashcard','match','speed','context','pairs','draw','stats'];
+const modes=['flashcard','match','speed','context','pairs','words'];
 const modeEls={
   flashcard:document.getElementById('flashcardMode'),
   match:document.getElementById('matchMode'),
   speed:document.getElementById('speedMode'),
   context:document.getElementById('contextMode'),
   pairs:document.getElementById('pairsMode'),
-  draw:document.getElementById('drawMode'),
-  stats:document.getElementById('statsMode')
+  words:document.getElementById('wordsMode')
 };
 
 document.querySelectorAll('.nav button').forEach(btn=>{
@@ -877,8 +1132,7 @@ function switchMode(mode){
   else if(mode==='speed') initSpeed();
   else if(mode==='context') initContext();
   else if(mode==='pairs') initPairs();
-  else if(mode==='draw') initDraw();
-  else if(mode==='stats') initStats();
+  else if(mode==='words') initWords();
 }
 
 document.querySelectorAll('.set-filter button').forEach(btn=>{
@@ -985,16 +1239,11 @@ function fcAnswer(correct){
   const w=fcDeck[fcIndex%fcDeck.length];
   const ws=getWordState(w.hanzi);ws.seen++;
   if(correct){
-    ws.streak=Math.min(ws.streak+1,3);ws.correct++;ws.lastCorrect=Date.now();state.totalCorrect++;state.streak++;
-    if(state.streak>state.bestStreak) state.bestStreak=state.streak;
-    addXP(5+(state.streak>=5?5:0));
-    spawnCoins(state.streak>=5?6:3);
+    ws.streak=Math.min(ws.streak+1,3);ws.correct++;ws.lastCorrect=Date.now();state.totalCorrect++;
+    addXP(5);
+    spawnCoins(3);
     if(ws.streak>=3&&!ws.mastered){ws.mastered=true;showXPPopup('Mastered: '+w.hanzi);addXP(20);spawnConfetti(15);spawnCoins(10);}
-    if(state.streak===10){showStreak(10);spawnConfetti(20);}
-    else if(state.streak===25){showStreak(25);spawnConfetti(30);}
-    else if(state.streak%50===0&&state.streak>0){showStreak(state.streak);spawnConfetti(40);}
-    else if(state.streak>=3) showStreak(state.streak);
-  }else{ws.streak=0;ws.wrong++;state.streak=0;}
+  }else{ws.streak=0;ws.wrong++;}
   state.totalAnswered++;saveState();updateUI();
   fcIndex++;
   if(fcIndex>=fcDeck.length){initFlashcards();return;}
@@ -1118,7 +1367,7 @@ function handleMatchAnswer(btn,chosen,correct,container,dir){
     btn.classList.add('correct');btn.classList.add('correct-pulse');matchCorrect++;
     ws.streak=Math.min(ws.streak+1,3);ws.correct++;ws.lastCorrect=Date.now();state.totalCorrect++;state.streak++;
     if(state.streak>state.bestStreak) state.bestStreak=state.streak;
-    addXP(10+(state.streak>=5?5:0));
+    addXP(maybeDoubleXP(10+(state.streak>=5?5:0),btn));
     const r=btn.getBoundingClientRect();
     spawnCoins(state.streak>=5?8:4,r.left+r.width/2,r.top);
     if(ws.streak>=3&&!ws.mastered){ws.mastered=true;showXPPopup('Mastered: '+correct.hanzi);addXP(20);spawnConfetti(15);spawnCoins(12);}
@@ -1170,7 +1419,7 @@ function showMatchReview(){
     </div>
   </div>`;
   document.body.appendChild(overlay);
-  if(matchCorrect>=MATCH_SESSION_LENGTH) spawnConfetti(30);
+  if(matchCorrect>=MATCH_SESSION_LENGTH){spawnConfetti(30);state._perfectMatch=true;state.lastPerfectRound=Date.now();saveState();updateUI();}
   // Audio buttons
   overlay.querySelectorAll('.audio-btn[data-hanzi]').forEach(btn=>{
     btn.addEventListener('click',()=>speakChinese(btn.dataset.hanzi));
@@ -1250,7 +1499,7 @@ function nextSpeedQuestion(){
         btn.classList.add('correct');btn.classList.add('correct-pulse');speedScore++;
         ws.streak=Math.min(ws.streak+1,3);ws.correct++;ws.lastCorrect=Date.now();state.totalCorrect++;state.streak++;
         if(state.streak>state.bestStreak) state.bestStreak=state.streak;
-        addXP(8);
+        addXP(maybeDoubleXP(8,btn));
         const sr=btn.getBoundingClientRect();
         spawnCoins(3,sr.left+sr.width/2,sr.top);
         if(ws.streak>=3&&!ws.mastered){ws.mastered=true;addXP(20);}
@@ -1287,214 +1536,6 @@ function endSpeedRound(){
   overlay.querySelector('#speedAgain').addEventListener('click',()=>{overlay.remove();initSpeed();});
   overlay.addEventListener('click',e=>{if(e.target===overlay){overlay.remove();initSpeed();}});
 }
-
-// ===== DRAW MODE =====
-let drawDeck=[],drawIndex=0,drawCurrentWord=null,guideOn=false;
-const CW=420; // canvas resolution
-const drawCanvas=document.getElementById('drawCanvas');
-const drawCtx=drawCanvas.getContext('2d');
-const guideCanvas=document.getElementById('drawGuide');
-const guideCtx=guideCanvas.getContext('2d');
-const scoreCanvas=document.createElement('canvas');
-scoreCanvas.width=CW;scoreCanvas.height=CW;
-const scoreCtx=scoreCanvas.getContext('2d');
-
-let isDrawing=false,lastDrawX=0,lastDrawY=0;
-
-function initDraw(){
-  let words=getFilteredWords();
-  if(words.length===0) words=[...WORDS];
-  drawDeck=shuffle([...words]);
-  drawIndex=0;
-  guideOn=false;
-  document.getElementById('btnGuide').classList.remove('on');
-  showDrawWord();
-}
-
-function showDrawWord(){
-  if(drawDeck.length===0) return;
-  const w=drawDeck[drawIndex%drawDeck.length];
-  drawCurrentWord=w;
-  document.getElementById('drawEnglish').textContent=w.english;
-  document.getElementById('drawPinyin').textContent=w.pinyin;
-  document.getElementById('drawCounter').textContent=(drawIndex+1)+' / '+drawDeck.length;
-  document.getElementById('drawScoreArea').innerHTML='';
-  clearDrawCanvas();
-  renderGuide(w.hanzi);
-}
-
-function clearDrawCanvas(){
-  drawCtx.clearRect(0,0,CW,CW);
-}
-
-function renderGuide(hanzi){
-  guideCtx.clearRect(0,0,CW,CW);
-  const text = hanzi.includes('/') ? hanzi.split('/')[0].trim() : hanzi;
-  const clean = text.replace(/\.\.\./g,'');
-  const pad = CW * 0.08; // keep 8% padding on each side
-  const maxW = CW - pad * 2;
-  const fontFace = '-apple-system, "Noto Sans SC", "Microsoft YaHei", sans-serif';
-
-  // Start large and shrink until text fits within canvas padding
-  let fontSize = 300;
-  guideCtx.font = `bold ${fontSize}px ${fontFace}`;
-  while(fontSize > 40 && guideCtx.measureText(clean).width > maxW){
-    fontSize -= 4;
-    guideCtx.font = `bold ${fontSize}px ${fontFace}`;
-  }
-
-  guideCtx.fillStyle = '#ffffff';
-  guideCtx.textAlign = 'center';
-  guideCtx.textBaseline = 'middle';
-  guideCtx.fillText(clean, CW/2, CW/2);
-
-  guideCanvas.style.opacity = guideOn ? '0.12' : '0';
-
-  scoreCtx.clearRect(0,0,CW,CW);
-  scoreCtx.font = guideCtx.font;
-  scoreCtx.fillStyle = '#ffffff';
-  scoreCtx.textAlign = 'center';
-  scoreCtx.textBaseline = 'middle';
-  scoreCtx.fillText(clean, CW/2, CW/2);
-}
-
-function getDrawPos(e){
-  const rect = drawCanvas.getBoundingClientRect();
-  const scaleX = CW / rect.width;
-  const scaleY = CW / rect.height;
-  if(e.touches){
-    return {x:(e.touches[0].clientX-rect.left)*scaleX, y:(e.touches[0].clientY-rect.top)*scaleY};
-  }
-  return {x:(e.clientX-rect.left)*scaleX, y:(e.clientY-rect.top)*scaleY};
-}
-
-function startDraw(e){
-  e.preventDefault();
-  isDrawing=true;
-  const p=getDrawPos(e);
-  lastDrawX=p.x;lastDrawY=p.y;
-  drawCtx.beginPath();
-  drawCtx.moveTo(p.x,p.y);
-}
-
-function moveDraw(e){
-  if(!isDrawing) return;
-  e.preventDefault();
-  const p=getDrawPos(e);
-  drawCtx.strokeStyle='#e8e8f0';
-  drawCtx.lineWidth=10;
-  drawCtx.lineCap='round';
-  drawCtx.lineJoin='round';
-  drawCtx.beginPath();
-  drawCtx.moveTo(lastDrawX,lastDrawY);
-  drawCtx.lineTo(p.x,p.y);
-  drawCtx.stroke();
-  lastDrawX=p.x;lastDrawY=p.y;
-}
-
-function endDraw(e){
-  if(e) e.preventDefault();
-  isDrawing=false;
-}
-
-drawCanvas.addEventListener('mousedown',startDraw);
-drawCanvas.addEventListener('mousemove',moveDraw);
-drawCanvas.addEventListener('mouseup',endDraw);
-drawCanvas.addEventListener('mouseleave',endDraw);
-drawCanvas.addEventListener('touchstart',startDraw,{passive:false});
-drawCanvas.addEventListener('touchmove',moveDraw,{passive:false});
-drawCanvas.addEventListener('touchend',endDraw,{passive:false});
-
-// Score the drawing
-function scoreDrawing(){
-  // Downsample both canvases to a grid for comparison
-  const gridSize = 30;
-  const cellW = CW/gridSize, cellH = CW/gridSize;
-
-  const targetData = scoreCtx.getImageData(0,0,CW,CW).data;
-  const drawnData = drawCtx.getImageData(0,0,CW,CW).data;
-
-  let targetCells = new Set();
-  let drawnCells = new Set();
-
-  for(let gy=0; gy<gridSize; gy++){
-    for(let gx=0; gx<gridSize; gx++){
-      const key = gy*gridSize+gx;
-      let tHit=false, dHit=false;
-      const sx = Math.floor(gx*cellW + cellW/2);
-      const sy = Math.floor(gy*cellH + cellH/2);
-      const idx = (sy*CW+sx)*4;
-      if(targetData[idx+3]>50) tHit=true;
-      if(drawnData[idx+3]>50) dHit=true;
-      for(let dy=-1;dy<=1;dy++){
-        for(let dx=-1;dx<=1;dx++){
-          const cx=Math.min(CW-1,Math.max(0,Math.floor(gx*cellW+cellW/2+dx*cellW*0.3)));
-          const cy=Math.min(CW-1,Math.max(0,Math.floor(gy*cellH+cellH/2+dy*cellH*0.3)));
-          const ci=(cy*CW+cx)*4;
-          if(targetData[ci+3]>50) tHit=true;
-          if(drawnData[ci+3]>50) dHit=true;
-        }
-      }
-      if(tHit) targetCells.add(key);
-      if(dHit) drawnCells.add(key);
-    }
-  }
-
-  if(targetCells.size===0||drawnCells.size===0) return 0;
-
-  let overlap=0;
-  for(const k of drawnCells){if(targetCells.has(k)) overlap++;}
-
-  const precision = overlap/drawnCells.size; // how much of what you drew is on target
-  const recall = overlap/targetCells.size;   // how much of the target you covered
-  if(precision+recall===0) return 0;
-  // F1-like score
-  const score = (2*precision*recall)/(precision+recall)*100;
-  return Math.round(Math.min(score,100));
-}
-
-document.getElementById('btnCheck').addEventListener('click',()=>{
-  if(!drawCurrentWord) return;
-  const score = scoreDrawing();
-  const area = document.getElementById('drawScoreArea');
-  let color = '--red';
-  let label = 'Keep practising';
-  if(score >= 70){color='--green';label='Great!';}
-  else if(score >= 45){color='--gold';label='Good effort!';}
-  else if(score >= 25){color='--accent';label='Getting there';}
-  area.innerHTML=`<div class="score-val" style="color:var(${color})">${score}%</div><div class="score-label">${label}</div>`;
-
-  // XP and coins based on score
-  if(score >= 70){addXP(15);spawnCoins(8);}
-  else if(score >= 45){addXP(8);spawnCoins(4);}
-  else if(score >= 25) addXP(3);
-
-  // Speak the word
-  speakChinese(drawCurrentWord.hanzi);
-
-  // Briefly show the guide
-  guideCanvas.style.opacity='0.25';
-  setTimeout(()=>{guideCanvas.style.opacity=guideOn?'0.12':'0';},2000);
-});
-
-document.getElementById('btnClear').addEventListener('click',clearDrawCanvas);
-
-document.getElementById('btnNext').addEventListener('click',()=>{
-  drawIndex++;
-  if(drawIndex>=drawDeck.length){drawDeck=shuffle([...getFilteredWords()]);if(drawDeck.length===0)drawDeck=shuffle([...WORDS]);drawIndex=0;}
-  showDrawWord();
-});
-
-document.getElementById('btnGuide').addEventListener('click',()=>{
-  guideOn=!guideOn;
-  document.getElementById('btnGuide').classList.toggle('on',guideOn);
-  guideCanvas.style.opacity=guideOn?'0.12':'0';
-});
-
-// Draw audio
-document.getElementById('drawAudio').addEventListener('click',()=>{
-  if(drawCurrentWord) speakChinese(drawCurrentWord.hanzi);
-});
 
 // ===== CONTEXT MODE =====
 let contextTimer,contextTimeLeft,contextCorrect=0,contextTotal=0,contextMistakes=[];
@@ -1571,7 +1612,7 @@ function handleContextAnswer(btn,chosen,correct,container){
     btn.classList.add('correct');btn.classList.add('correct-pulse');contextCorrect++;
     ws.streak=Math.min(ws.streak+1,3);ws.correct++;ws.lastCorrect=Date.now();state.totalCorrect++;state.streak++;
     if(state.streak>state.bestStreak) state.bestStreak=state.streak;
-    addXP(12+(state.streak>=5?5:0));
+    addXP(maybeDoubleXP(12+(state.streak>=5?5:0),btn));
     const r=btn.getBoundingClientRect();
     spawnCoins(state.streak>=5?8:4,r.left+r.width/2,r.top);
     if(ws.streak>=3&&!ws.mastered){ws.mastered=true;showXPPopup('Mastered: '+correct.hanzi);addXP(20);spawnConfetti(15);}
@@ -1621,7 +1662,7 @@ function showContextReview(){
     </div>
   </div>`;
   document.body.appendChild(overlay);
-  if(contextCorrect>=CONTEXT_SESSION_LENGTH) spawnConfetti(30);
+  if(contextCorrect>=CONTEXT_SESSION_LENGTH){spawnConfetti(30);state._perfectContext=true;state.lastPerfectRound=Date.now();saveState();updateUI();}
   overlay.querySelectorAll('.audio-btn[data-hanzi]').forEach(btn=>{
     btn.addEventListener('click',()=>speakChinese(btn.dataset.hanzi));
   });
@@ -1726,7 +1767,7 @@ function handlePairTap(el){
     const ws=getWordState(first.dataset.hanzi);
     ws.seen++;ws.correct++;ws.lastCorrect=Date.now();ws.streak=Math.min(ws.streak+1,3);
     state.totalCorrect++;state.totalAnswered++;
-    addXP(8);
+    addXP(maybeDoubleXP(8,second));
     const r=second.getBoundingClientRect();
     spawnCoins(3,r.left+r.width/2,r.top);
     speakChinese(first.dataset.hanzi);
@@ -1740,6 +1781,7 @@ function handlePairTap(el){
       addXP(15); // board clear bonus
       pairsXP+=15;
       spawnConfetti(15);
+      if(pairsTime<8){state._lightningPairs=true;state.lastPerfectRound=Date.now();saveState();updateUI();}
       if(pairsRound<PAIRS_ROUNDS){
         pairsRound++;
         setTimeout(startPairsRound,1000);
@@ -1778,31 +1820,83 @@ function showPairsResults(){
   overlay.addEventListener('click',e=>{if(e.target===overlay){overlay.remove();initPairs();}});
 }
 
-// ===== STATS DASHBOARD =====
-function initStats(){
-  const mastered=WORDS.filter(w=>getWordState(w.hanzi).mastered).length;
+// ===== WORDS DASHBOARD =====
+function getHardestWords(n){
+  // Return the n words with highest weight (weakest/stalest), excluding unseen
+  const withWeights=WORDS.map(w=>({word:w,weight:getWordWeight(w.hanzi),state:getMasteryState(w.hanzi)}));
+  // Prioritize: needs-review > fading > learning > unseen > mastered
+  const candidates=withWeights.filter(w=>w.state!=='mastered');
+  if(candidates.length===0) return withWeights.sort((a,b)=>b.weight-a.weight).slice(0,n).map(w=>w.word);
+  candidates.sort((a,b)=>b.weight-a.weight);
+  return candidates.slice(0,n).map(w=>w.word);
+}
+
+function initWords(){
   const acc=state.totalAnswered>0?Math.round(state.totalCorrect/state.totalAnswered*100):0;
-  document.getElementById('dMastered').textContent=mastered+' / '+WORDS.length;
   document.getElementById('dAccuracy').textContent=acc+'%';
   document.getElementById('dBestStreak').textContent=state.bestStreak;
   document.getElementById('dSessions').textContent=state.sessions;
   document.getElementById('dTotalXP').textContent=state.xp;
 
-  // Daily streak calendar
+  renderThemePicker();
+  renderBadgeGrid();
   renderStreakCalendar();
 
   const grid=document.getElementById('masteryGrid');grid.innerHTML='';
   for(const w of WORDS){
-    const ws=getWordState(w.hanzi);
+    const ms=getMasteryState(w.hanzi);
     const item=document.createElement('div');
-    item.className='mastery-item'+(ws.mastered?' mastered':'');
-    const pct=Math.min(ws.streak/3*100,100);
-    item.innerHTML=`<div class="mi-hanzi">${w.hanzi}</div><div class="mi-bar"><div class="mi-fill" style="width:${pct}%"></div></div>`;
-    item.title=w.pinyin+' — '+w.english+'\nStreak: '+ws.streak+'/3';
-    item.addEventListener('click',()=>speakChinese(w.hanzi));
+    item.className='mastery-item st-'+ms;
+    item.innerHTML=`<div class="mi-hanzi">${w.hanzi}</div><div class="mi-english">${w.english}</div><div class="mi-state"></div>`;
+    item.addEventListener('click',()=>showWordDetail(w));
     grid.appendChild(item);
   }
 }
+
+function showWordDetail(word){
+  const ws=getWordState(word.hanzi);
+  const ms=getMasteryState(word.hanzi);
+  const acc=ws.seen>0?Math.round(ws.correct/ws.seen*100):0;
+  const daysSince=ws.lastCorrect?Math.floor((Date.now()-ws.lastCorrect)/(1000*60*60*24)):null;
+  const lastPracticed=daysSince===null?'Never':daysSince===0?'Today':daysSince===1?'Yesterday':daysSince+' days ago';
+  const statusLabels={mastered:'Mastered',fading:'Fading','needs-review':'Needs review',learning:'Learning',unseen:'Not started'};
+  const overlay=document.createElement('div');overlay.className='word-detail-overlay';
+  overlay.innerHTML=`<div class="word-detail-card">
+    <div class="wd-hanzi">${word.hanzi}</div>
+    <div class="wd-pinyin">${word.pinyin}</div>
+    <div class="wd-english">${word.english}</div>
+    <button class="audio-btn" style="margin:0 auto 12px" id="wdAudio">&#x1f50a;</button>
+    <div class="wd-status st-${ms}">${statusLabels[ms]||ms}</div>
+    <div class="wd-stats">
+      <div class="wd-stat"><div class="wd-stat-val">${ws.streak}/3</div><div class="wd-stat-lbl">Streak</div></div>
+      <div class="wd-stat"><div class="wd-stat-val">${acc}%</div><div class="wd-stat-lbl">Accuracy</div></div>
+      <div class="wd-stat"><div class="wd-stat-val">${ws.seen}</div><div class="wd-stat-lbl">Seen</div></div>
+    </div>
+    <div style="font-size:.7rem;color:var(--text2);margin-top:4px">Last practiced: ${lastPracticed}</div>
+    <div class="wd-actions">
+      <button class="wd-practice" id="wdPractice">Practice this word</button>
+      <button class="wd-close" id="wdClose">Close</button>
+    </div>
+  </div>`;
+  document.body.appendChild(overlay);
+  overlay.querySelector('#wdAudio').addEventListener('click',()=>speakChinese(word.hanzi));
+  overlay.querySelector('#wdPractice').addEventListener('click',()=>{
+    overlay.remove();
+    switchMode('flashcard');
+    initFlashcards([word]);
+  });
+  overlay.querySelector('#wdClose').addEventListener('click',()=>overlay.remove());
+  overlay.addEventListener('click',e=>{if(e.target===overlay) overlay.remove();});
+  speakChinese(word.hanzi);
+}
+
+// Practice hardest
+document.getElementById('practiceHardest').addEventListener('click',()=>{
+  const hardest=getHardestWords(5);
+  if(hardest.length===0) return;
+  switchMode('flashcard');
+  initFlashcards(hardest);
+});
 
 function renderStreakCalendar(){
   const cal=document.getElementById('streakCalendar');
@@ -1856,7 +1950,7 @@ function renderStreakCalendar(){
 
 document.getElementById('resetBtn').addEventListener('click',()=>{
   if(confirm('Reset all progress? This cannot be undone.')){
-    localStorage.removeItem('lucyVocab');state=defaultState();saveState();updateUI();initStats();
+    localStorage.removeItem('lucyVocab');state=defaultState();saveState();updateUI();initWords();
   }
 });
 
@@ -1979,6 +2073,7 @@ document.addEventListener('keydown',e=>{
 
 // ===== INIT =====
 loadState();
+applyTheme(state.activeTheme||'default');
 initTTS();
 initSpeechRec();
 updateUI();

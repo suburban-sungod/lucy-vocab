@@ -37,11 +37,16 @@ Each word has: characters, pinyin, English meaning.
 3. **Speed Round** -- 30 second blitz. High score saved. Mistakes shown in results.
 4. **Context** -- fill-in-the-blank Chinese sentences, 4 word choices, 15s timer. 30 sentences for 3A4B set (2 per word). 15 questions per session with review screen.
 5. **Pairs** -- 4 Chinese + 4 English tiles in a grid. Tap to select, tap match. Timer counts up. 3 rounds per session, results show per-round times.
-6. **Draw** -- canvas for character drawing practice. Pixel-overlap scoring against rendered target. Optional faint guide overlay. Dynamic font sizing to fit all character lengths.
 
 ### Audio features
 - **TTS pronunciation** -- Web Speech API (`zh-CN`). Speaker buttons on flashcards, match mode, draw mode, stats grid.
 - **Speech recognition** -- `webkitSpeechRecognition` in continuous mode (one-time mic permission). Mic button on flashcard back. Compares recognized text against expected characters. Best in Chrome.
+
+### Mastery dashboard
+- Prominent mastery overview at top of app: X/45 words mastered with color-segmented progress bar
+- Visual mastery states that decay over time: mastered (green, <7 days), fading (amber, 7-14 days stale), needs review (red, 14+ days stale), learning (purple), unseen (grey)
+- "Practice 5 hardest words" button always visible, picks weakest/stalest words and launches flashcards
+- Words tab with tap-to-inspect: tap any word to see full stats (streak, accuracy, times seen, last practiced) plus audio and a practice button
 
 ### Spaced repetition
 Words are weighted by: days since last correct answer, wrong ratio, mastery staleness. Unseen words get highest priority. Mastered words resurface after 3-7 days to prevent forgetting. Applied to flashcard deck building, match and speed question selection.
@@ -54,13 +59,17 @@ Words are weighted by: days since last correct answer, wrong ratio, mastery stal
 - Confetti on milestones (50% mastery, 100% mastery, level ups)
 - Sadie (the dog) appears at streak multiples of 10 -- her photo is base64-embedded
 - Answer streak rewards: 20 streak = $2, 30 streak = $5, 40 streak = $10. Timestamped for screenshotting
-- Daily streak calendar (visible in Stats): tracks consecutive days practiced. Prizes: 7 days = $3, 14 days = $5, 30 days = $10
+- Daily streak calendar (visible in Words tab): tracks consecutive days practiced. Prizes: 7 days = $3, 14 days = $5, 30 days = $10
 - Daily login bonus (+10 XP)
 - Set filters: All 45, Week 3A-4B, Week 2B, Needs Practice
+- **Achievement badges** -- 16 badges earned through milestones (first correct, first mastery, perfect rounds, streaks, XP thresholds). Toast notification slides in at top on unlock. Badge grid in Words tab shows earned/locked state.
+- **Unlockable themes** -- 6 color themes (Default, Sakura, Ocean, Sunset, Neon, Midnight). Each unlocks with a specific badge. Theme picker in Words tab as colored dots. Active theme persisted across sessions.
+- **Mystery 2x XP** -- ~15% random chance on correct answers in Match, Speed, Context and Pairs. Golden "2x XP!" popup and shimmer effect on the answer button.
+- **Sadie dashboard thumbnail** -- 32px circular Sadie photo in the header. Changes state: sleeping (greyscale + zzz) when not practiced today, happy when practiced, excited (fire) on 5+ streak, proud (star) for 30s after a perfect round.
 
 ### Data persistence
 - All progress in localStorage (key: `lucyVocab`)
-- Tracks: XP, streaks (answer + daily), best streaks, sessions, accuracy, speed high score, per-word mastery with lastCorrect timestamps, daily history, daily rewards
+- Tracks: XP, streaks (answer + daily), best streaks, sessions, accuracy, speed high score, per-word mastery with lastCorrect timestamps, daily history, daily rewards, badges earned, unlocked themes, active theme, perfect round flags
 - State migration: new fields default in gracefully, existing localStorage unaffected
 - Reset button with confirmation in Stats tab
 
