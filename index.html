@@ -1125,6 +1125,7 @@ function updateUI(){
 
 // ===== NAVIGATION =====
 let currentMode='flashcard';
+let previousMode='flashcard';
 const modes=['flashcard','match','speed','context','pairs','words'];
 const modeEls={
   flashcard:document.getElementById('flashcardMode'),
@@ -1138,9 +1139,13 @@ const modeEls={
 document.querySelectorAll('.nav button').forEach(btn=>{
   btn.addEventListener('click',()=>switchMode(btn.dataset.mode));
 });
-document.getElementById('statsBtn').addEventListener('click',()=>switchMode('words'));
+document.getElementById('statsBtn').addEventListener('click',()=>{
+  if(currentMode==='words') switchMode(previousMode);
+  else switchMode('words');
+});
 
 function switchMode(mode){
+  if(currentMode!=='words') previousMode=currentMode;
   currentMode=mode;
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
   document.getElementById('statsBtn').classList.toggle('active',mode==='words');
