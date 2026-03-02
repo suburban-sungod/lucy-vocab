@@ -43,10 +43,10 @@ Each word has: characters, pinyin, English meaning.
 - **Speech recognition** -- `webkitSpeechRecognition` in continuous mode (one-time mic permission). Mic button on flashcard back. Compares recognized text against expected characters. Best in Chrome.
 
 ### Mastery dashboard
-- Prominent mastery overview at top of app: X/45 words mastered with color-segmented progress bar
+- Prominent mastery overview at top of app with color-segmented progress bar. Reflects the active set filter (e.g. "5 / 15 words mastered" when viewing Week 3A-4B)
 - Visual mastery states that decay over time: mastered (green, <7 days), fading (amber, 7-14 days stale), needs review (red, 14+ days stale), learning (purple), unseen (grey)
 - "Practice 5 hardest words" button always visible, picks weakest/stalest words and launches flashcards
-- Words tab with tap-to-inspect: tap any word to see full stats (streak, accuracy, times seen, last practiced) plus audio and a practice button
+- Words/progress tab accessed via 📊 icon in header top-right. Tap any word to see full stats (streak, accuracy, times seen, last practiced) plus audio and a practice button
 
 ### Spaced repetition
 Words are weighted by: days since last correct answer, wrong ratio, mastery staleness. Unseen words get highest priority. Mastered words resurface after 3-7 days to prevent forgetting. Applied to flashcard deck building, match and speed question selection.
@@ -63,7 +63,7 @@ Words are weighted by: days since last correct answer, wrong ratio, mastery stal
 - Daily login bonus (+10 XP)
 - Set filters: All 45, Week 3A-4B, Week 2B, Needs Practice
 - **Achievement badges** -- 16 badges earned through milestones (first correct, first mastery, perfect rounds, streaks, XP thresholds). Toast notification slides in at top on unlock. Badge grid in Words tab shows earned/locked state.
-- **Unlockable themes** -- 6 color themes (Default, Sakura, Ocean, Sunset, Neon, Midnight). Each unlocks with a specific badge. Theme picker in Words tab as colored dots. Active theme persisted across sessions.
+- **Unlockable themes** -- 6 color themes (Default, Sakura, Ocean, Sunset, Neon, Midnight). Each unlocks with a specific badge. Theme picker in Words tab as colored dots with hint showing what unlocks the next theme. Active theme persisted across sessions.
 - **Mystery 2x XP** -- ~15% random chance on correct answers in Match, Speed, Context and Pairs. Golden "2x XP!" popup and shimmer effect on the answer button.
 - **Sadie dashboard thumbnail** -- 32px circular Sadie photo in the header. Changes state: sleeping (greyscale + zzz) when not practiced today, happy when practiced, excited (fire) on 5+ streak, proud (star) for 30s after a perfect round.
 
@@ -87,8 +87,6 @@ Words are weighted by: days since last correct answer, wrong ratio, mastery stal
 - Single HTML file, all CSS/JS inline, no dependencies
 - Vanilla JS, no frameworks
 - Service worker: network-first strategy, auto-reloads when new version deployed (bump CACHE_VERSION in sw.js)
-- Canvas drawing uses 420x420 resolution, CSS-scaled to viewport
-- Draw scoring: renders target character on hidden canvas, downsamples both to 30x30 grid, calculates F1 (precision + recall) of pixel overlap
 - Speech recognition uses persistent continuous session to avoid repeated mic permission prompts on file:// URLs
 - TTS rate set to 0.85 for clearer pronunciation
 - Responsive design, works on laptop and phone
