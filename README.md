@@ -33,61 +33,81 @@ Each word has: characters, pinyin, English meaning.
 
 ### Game modes
 1. **Flashcards** -- tap to flip, swipe or buttons for got it / need practice. Spaced repetition weighting (weak/stale words appear more). Keyboard: space to flip, arrows to answer, `s` to speak.
-2. **Match** -- 4-option multiple choice, 10s timer, 15 questions per session. Alternates Chinese-to-English, English-to-Chinese, Pinyin-to-English. Auto-pronounces each word. Review screen at end shows mistakes with "Study Mistakes" option.
+2. **Match** -- 4-option multiple choice, 10s timer, 15 questions per session. Alternates Chinese-to-English, English-to-Chinese, Pinyin-to-English. Half of hanzi questions are audio-only. Auto-pronounces each word. Review screen shows mistakes with "Study Mistakes" option.
 3. **Speed Round** -- 30 second blitz. High score saved. Mistakes shown in results.
 4. **Context** -- fill-in-the-blank Chinese sentences, 4 word choices, 15s timer. 30 sentences for 3A4B set (2 per word). 15 questions per session with review screen.
-5. **Pairs** -- 4 Chinese + 4 English tiles in a grid. Tap to select, tap match. Timer counts up. 3 rounds per session, results show per-round times.
+5. **Pairs** -- 4 Chinese + 4 English tiles in a grid. Tap to match. Timer counts up. 3 rounds per session, results show per-round times.
 
 ### Audio features
-- **TTS pronunciation** -- Web Speech API (`zh-CN`). Speaker buttons on flashcards, match mode, draw mode, stats grid.
+- **TTS pronunciation** -- Web Speech API (`zh-CN`). Speaker buttons on flashcards, match mode, word details.
 - **Speech recognition** -- `webkitSpeechRecognition` in continuous mode (one-time mic permission). Mic button on flashcard back. Compares recognized text against expected characters. Best in Chrome.
 
-### Mastery dashboard
-- Prominent mastery overview at top of app with color-segmented progress bar. Reflects the active set filter (e.g. "5 / 15 words mastered" when viewing Week 3A-4B)
-- Visual mastery states that decay over time: mastered (green, <7 days), fading (amber, 7-14 days stale), needs review (red, 14+ days stale), learning (purple), unseen (grey)
-- "Practice 5 hardest words" button always visible, picks weakest/stalest words and launches flashcards
-- Words/progress tab accessed via bar chart icon in header top-right (SVG, inherits theme color). Toggles: second tap returns to previous mode. Tap any word to see full stats (streak, accuracy, times seen, last practiced) plus audio and a practice button
+### Stats page (tabbed)
 
-### Spaced repetition
-Words are weighted by: days since last correct answer, wrong ratio, mastery staleness. Unseen words get highest priority. Mastered words resurface after 3-7 days to prevent forgetting. Applied to flashcard deck building, match and speed question selection.
+Accessed via bar chart icon in header top-right (SVG, inherits theme color). Second tap returns to previous mode.
+
+Three tabs:
+- **Progress** -- accuracy, best streak, sessions, total XP. Daily streak calendar tracking consecutive practice days with prize milestones (7d=$3, 14d=$5, 30d=$10).
+- **Collection** -- theme picker (colored dots, bg + accent preview) with unlock hints. Badge grid showing 16 achievements (earned/locked).
+- **Words** -- mastery grid of all 45 words. Tap any word for detail overlay (streak, accuracy, times seen, last practiced, audio, practice button). Reset button.
+
+Active tab persists across mode switches and sessions.
+
+### Mastery system
+- Prominent mastery overview at top of app with color-segmented progress bar. Reflects the active set filter.
+- Visual mastery states that decay over time: mastered (green, <7 days), fading (amber, 7-14 days), needs review (red, 14+ days), learning (accent color), unseen (grey).
+- "Practice 5 hardest words" button always visible, picks weakest/stalest words.
+- Spaced repetition weighting by: days since last correct, wrong ratio, mastery staleness. Unseen words get highest priority. Mastered words resurface after 3-7 days. Applied across flashcards, match and speed.
+
+### Themes
+
+6 color themes that override the full palette (bg, surface, surface2, accent, accent2, text, text2, overlay):
+
+| Theme | Accent | Unlock condition |
+|-------|--------|-----------------|
+| Default | purple | -- |
+| Sakura | pink | Master first word |
+| Ocean | blue | Perfect Match round |
+| Sunset | orange | Master 50% of words |
+| Neon | green | 500 XP |
+| Midnight | lavender | 7-day daily streak |
+
+All surfaces, overlays, borders and confetti respond to the active theme via CSS custom properties and `color-mix()`. Theme picker shows bg color with accent border for a 2-color preview.
 
 ### Engagement
 - XP system with levels: Beginner (0) > Intermediate (200) > Advanced (500) > Master (1000)
 - Answer streak counter with fire animation
 - Word mastery: 3 correct in a row = mastered
 - Coin burst on correct answers (physics-based arcs via rAF)
-- Confetti on milestones (50% mastery, 100% mastery, level ups)
-- Sadie (the dog) appears at streak multiples of 10 -- her photo is base64-embedded
-- Answer streak rewards: 20 streak = $2, 30 streak = $5, 40 streak = $10. Timestamped for screenshotting
-- Daily streak calendar (visible in Words tab): tracks consecutive days practiced. Prizes: 7 days = $3, 14 days = $5, 30 days = $10
+- Confetti on milestones (colors match active theme)
+- Sadie (the dog) appears at streak multiples of 10 -- photo is base64-embedded
+- Answer streak rewards: 20=$2, 30=$5, 40=$10. Timestamped receipt for screenshotting.
 - Daily login bonus (+10 XP)
 - Set filters: All 45, Week 3A-4B, Week 2B, Needs Practice
-- **Achievement badges** -- 16 badges earned through milestones (first correct, first mastery, perfect rounds, streaks, XP thresholds). Toast notification slides in at top on unlock. Badge grid in Words tab shows earned/locked state.
-- **Unlockable themes** -- 6 color themes (Default, Sakura, Ocean, Sunset, Neon, Midnight). Each unlocks with a specific badge. Theme picker in Words tab as colored dots with hint showing what unlocks the next theme. Active theme persisted across sessions.
-- **Mystery 2x XP** -- ~15% random chance on correct answers in Match, Speed, Context and Pairs. Golden "2x XP!" popup and shimmer effect on the answer button.
-- **Sadie dashboard thumbnail** -- 32px circular Sadie photo in the header. Changes state: sleeping (greyscale + zzz) when not practiced today, happy when practiced, excited (fire) on 5+ streak, proud (star) for 30s after a perfect round.
+- 16 achievement badges with toast notifications on unlock
+- Mystery 2x XP (~15% chance on correct answers). Golden popup and shimmer effect.
+- Sadie dashboard thumbnail in header. States: sleeping (greyscale + zzz), happy (practiced today), excited (fire, 5+ streak), proud (star, after perfect round).
 
 ### Data persistence
 - All progress in localStorage (key: `lucyVocab`)
-- Tracks: XP, streaks (answer + daily), best streaks, sessions, accuracy, speed high score, per-word mastery with lastCorrect timestamps, daily history, daily rewards, badges earned, unlocked themes, active theme, perfect round flags
+- Tracks: XP, streaks (answer + daily), best streaks, sessions, accuracy, speed high score, per-word mastery with lastCorrect timestamps, daily history, daily rewards, badges, unlocked themes, active theme, active stats tab, perfect round flags
 - State migration: new fields default in gracefully, existing localStorage unaffected
-- Reset button with confirmation in Stats tab
+- Reset button with confirmation in Words tab
 
 ## Files
 
-- `index.html` -- the game
+- `index.html` -- the game (all CSS/JS inline)
 - `sw.js` -- service worker (network-first caching, auto-reload on new versions)
 - `manifest.json` -- PWA manifest for home screen install
 - `sadie.png` -- original Sadie photo (base64-compressed version embedded in HTML)
 - `apple-touch-icon.png` / `favicon.png` / `icon-1024.png` -- app icons
-- `README.md` -- this file
 
 ## Tech notes
 
-- Single HTML file, all CSS/JS inline, no dependencies
-- Vanilla JS, no frameworks
-- Service worker: network-first strategy, auto-reloads when new version deployed (bump CACHE_VERSION in sw.js)
-- Speech recognition uses persistent continuous session to avoid repeated mic permission prompts on file:// URLs
+- Single HTML file, no dependencies, vanilla JS
+- CSS custom properties for theming, `color-mix()` for transparent accent variants (Safari 16.2+)
+- Service worker: network-first strategy, auto-reloads on new version (bump `CACHE_VERSION` in sw.js)
+- Speech recognition uses persistent continuous session to avoid repeated mic permission prompts
 - TTS rate set to 0.85 for clearer pronunciation
 - Responsive design, works on laptop and phone
 - Sadie photo compressed to ~10KB JPEG before base64 encoding
