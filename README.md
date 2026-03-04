@@ -23,7 +23,7 @@ git add -A && git commit -m "description" && git push origin main
 
 Pages rebuilds automatically. The service worker (`sw.js`) handles cache invalidation. Bump `CACHE_VERSION` in `sw.js` with each deploy so the app auto-refreshes on Lucy's device.
 
-## V2 UI (current)
+## V1 UI (current — reverted from v2)
 
 Locket-inspired redesign. One action per screen, two screens with a floating bottom nav pill.
 
@@ -108,9 +108,9 @@ Theme picker accessed via palette button in top bar.
 
 ## Files
 
-- `index.html` -- the game, v2 (all CSS/JS inline)
-- `index-v1.html` -- previous v1 version (preserved for rollback)
-- `index-v2.html` -- v2 source copy
+- `index.html` -- the game, v1 (reverted from v2; all CSS/JS inline)
+- `index-v1.html` -- v1 source copy
+- `index-v2.html` -- v2 (not active; preserved for reference)
 - `sw.js` -- service worker (network-first caching, auto-reload on new versions)
 - `manifest.json` -- PWA manifest for home screen install
 - `sadie.png` -- original Sadie photo (base64-compressed version embedded in HTML)
