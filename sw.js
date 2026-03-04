@@ -1,9 +1,10 @@
-const CACHE_VERSION = 'v5';
+const CACHE_VERSION = 'v6';
 const CACHE_NAME = 'lucy-vocab-' + CACHE_VERSION;
 
 const ASSETS = [
   './',
   './index.html',
+  './index-v2.html',
   './apple-touch-icon.png',
   './favicon.png',
   './manifest.json'
