@@ -1,0 +1,376 @@
+/* Flashcard */
+.flashcard-container {
+  perspective: 1000px;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.flashcard {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+  cursor: pointer;
+}
+
+.flashcard.flipped {
+  transform: rotateY(180deg);
+}
+
+.flashcard-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: var(--radius);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  gap: 12px;
+}
+
+.flashcard-back {
+  transform: rotateY(180deg);
+}
+
+.flashcard-hanzi {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.flashcard-pinyin {
+  font-size: 1.4rem;
+  color: var(--text2);
+}
+
+.flashcard-english {
+  font-size: 1.2rem;
+  color: var(--text);
+}
+
+/* Mastery dots */
+.mastery-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.mastery-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--surface2);
+}
+
+.mastery-dot.filled {
+  background: var(--green);
+}
+
+/* Card action buttons */
+.card-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.card-actions button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: transform 0.15s ease;
+}
+
+.card-actions button:active {
+  transform: scale(0.95);
+}
+
+.btn-got-it {
+  background: var(--green);
+  color: #000;
+}
+
+.btn-need-practice {
+  background: var(--red);
+  color: #fff;
+}
+
+/* Audio / Mic buttons */
+.audio-btn, .mic-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.audio-btn:active, .mic-btn:active {
+  background: var(--accent);
+}
+
+/* Quiz / Match / Context */
+.quiz-prompt {
+  font-size: 1.4rem;
+  text-align: center;
+  padding: 24px 16px;
+  line-height: 1.6;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quiz-prompt .blank {
+  display: inline-block;
+  min-width: 60px;
+  border-bottom: 3px solid var(--accent);
+  margin: 0 4px;
+}
+
+.quiz-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 16px 0;
+}
+
+.quiz-option {
+  min-height: 56px;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.15s ease;
+  border: 2px solid transparent;
+}
+
+.quiz-option:active {
+  transform: scale(0.97);
+}
+
+.quiz-option.correct {
+  background: var(--green);
+  color: #000;
+  border-color: var(--green);
+}
+
+.quiz-option.wrong {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+  animation: shake 0.4s ease;
+}
+
+.quiz-option.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Timer bar */
+.timer-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--surface2);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.timer-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.1s linear;
+}
+
+.timer-bar-fill.warning {
+  background: var(--gold);
+}
+
+.timer-bar-fill.danger {
+  background: var(--red);
+}
+
+/* Progress dots */
+.progress-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  padding: 12px 0;
+}
+
+.progress-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--surface2);
+  transition: background 0.3s ease;
+}
+
+.progress-dot.correct {
+  background: var(--green);
+}
+
+.progress-dot.wrong {
+  background: var(--red);
+}
+
+.progress-dot.active {
+  background: var(--accent);
+  animation: pulse 1s infinite;
+}
+
+/* Step indicator */
+.step-indicator {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text2);
+  padding: 8px 0;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Pairs mode */
+.pairs-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 12px 0;
+}
+
+.pairs-tile {
+  min-height: 56px;
+  padding: 8px;
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+  word-break: break-word;
+}
+
+.pairs-tile.selected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.pairs-tile.matched {
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+}
+
+.pairs-tile.wrong {
+  animation: shake 0.4s ease;
+  border-color: var(--red);
+}
+
+/* Writing mode */
+.writing-prompt {
+  text-align: center;
+  padding: 32px 16px;
+}
+
+.writing-instruction {
+  font-size: 1.2rem;
+  color: var(--text2);
+  margin-bottom: 24px;
+}
+
+.writing-replay-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  transition: transform 0.15s ease;
+}
+
+.writing-replay-btn:active {
+  transform: scale(0.93);
+}
+
+.writing-attempt-counter {
+  font-size: 0.9rem;
+  color: var(--text2);
+  margin-bottom: 16px;
+}
+
+.writing-reveal-btn {
+  min-width: 200px;
+  min-height: 56px;
+  padding: 16px 32px;
+  border-radius: 28px;
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 auto;
+  display: block;
+  transition: transform 0.15s ease;
+}
+
+.writing-reveal-btn:active {
+  transform: scale(0.95);
+}
+
+.writing-answer {
+  text-align: center;
+  animation: pop 0.3s ease;
+}
+
+.writing-answer-hanzi {
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.writing-answer-pinyin {
+  font-size: 1.3rem;
+  color: var(--text2);
+  margin-bottom: 24px;
+}
+
+/* Answer streak fire */
+.streak-fire {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+  animation: pop 0.5s ease;
+  pointer-events: none;
+  z-index: 100;
+}

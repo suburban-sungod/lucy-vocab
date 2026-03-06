@@ -1,0 +1,367 @@
+/* Overlay base */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+.overlay-content {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 24px;
+  width: calc(100% - 32px);
+  max-width: 440px;
+  max-height: 90dvh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+.overlay-close {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-bottom: 12px;
+}
+
+/* Word detail overlay */
+.word-detail {
+  text-align: center;
+}
+
+.word-detail-hanzi {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.word-detail-pinyin {
+  font-size: 1.2rem;
+  color: var(--text2);
+  margin-bottom: 4px;
+}
+
+.word-detail-english {
+  font-size: 1.1rem;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+.word-detail-stats {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.word-detail-stat {
+  text-align: center;
+}
+
+.word-detail-stat-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.word-detail-stat-label {
+  font-size: 0.75rem;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.word-detail-practice-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  min-height: 44px;
+}
+
+/* Theme picker */
+.theme-picker {
+  display: grid;
+  gap: 12px;
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--surface2);
+  min-height: 44px;
+  transition: background 0.2s ease;
+}
+
+.theme-option.active {
+  border: 2px solid var(--accent);
+}
+
+.theme-option.locked {
+  opacity: 0.5;
+}
+
+.theme-swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.theme-name {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.theme-lock {
+  font-size: 0.8rem;
+  color: var(--text2);
+}
+
+/* Results overlay */
+.results-overlay .overlay-content {
+  text-align: center;
+}
+
+.results-score {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.results-label {
+  font-size: 1rem;
+  color: var(--text2);
+  margin-bottom: 20px;
+}
+
+.results-xp {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.results-mistakes {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.results-mistakes h3 {
+  font-size: 1rem;
+  color: var(--text2);
+  margin-bottom: 8px;
+}
+
+.mistake-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 8px;
+  background: var(--surface2);
+  margin-bottom: 6px;
+}
+
+.mistake-hanzi {
+  font-size: 1.3rem;
+  font-weight: 600;
+  min-width: 50px;
+}
+
+.mistake-info {
+  flex: 1;
+}
+
+.mistake-pinyin {
+  font-size: 0.85rem;
+  color: var(--text2);
+}
+
+.mistake-english {
+  font-size: 0.85rem;
+}
+
+.mistake-audio {
+  width: 36px;
+  height: 36px;
+}
+
+.results-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.results-actions button {
+  flex: 1;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  min-height: 44px;
+}
+
+.btn-done {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-again {
+  background: var(--surface2);
+  color: var(--text);
+}
+
+/* Badge toast */
+.badge-toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface);
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 200;
+  animation: slideDown 0.3s ease reverse, slideDown 0.3s ease 2.7s forwards;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.badge-toast-emoji {
+  font-size: 1.8rem;
+}
+
+.badge-toast-text {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* XP popup */
+.xp-popup {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--gold);
+  z-index: 150;
+  pointer-events: none;
+  animation: pop 0.4s ease, fadeIn 0.4s ease reverse 1.2s forwards;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Reward receipt */
+.reward-receipt .overlay-content {
+  text-align: center;
+  background: linear-gradient(135deg, var(--surface), var(--surface2));
+  border: 2px solid var(--gold);
+}
+
+.reward-amount {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--gold);
+  margin: 16px 0;
+}
+
+.reward-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.reward-subtitle {
+  font-size: 0.9rem;
+  color: var(--text2);
+  margin-bottom: 4px;
+}
+
+.reward-timestamp {
+  font-size: 0.75rem;
+  color: var(--text2);
+  margin-bottom: 16px;
+}
+
+.reward-dismiss {
+  padding: 12px 32px;
+  border-radius: 12px;
+  background: var(--gold);
+  color: #000;
+  font-weight: 600;
+  min-height: 44px;
+}
+
+/* Sadie popup */
+.sadie-popup {
+  text-align: center;
+}
+
+.sadie-popup img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 12px;
+  border: 4px solid var(--gold);
+  animation: pop 0.4s ease;
+}
+
+.sadie-popup-text {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+/* Reset progress confirmation */
+.reset-confirm {
+  text-align: center;
+}
+
+.reset-confirm p {
+  margin-bottom: 16px;
+  color: var(--text2);
+}
+
+.reset-confirm-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.reset-confirm-actions button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  min-height: 44px;
+}
+
+.btn-reset-cancel {
+  background: var(--surface2);
+  color: var(--text);
+}
+
+.btn-reset-confirm {
+  background: var(--red);
+  color: #fff;
+}

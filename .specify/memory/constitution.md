@@ -1,50 +1,52 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Lucy Vocab v2 Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. PWA-First
+The app is a Progressive Web App deployed to GitHub Pages. It MUST work offline, install to home screen, and auto-update via service worker. No app store distribution.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Zero Dependencies
+No build tools, no npm, no bundlers. Vanilla HTML, CSS and JavaScript only. The app MUST run by opening index.html in a browser. Third-party libraries are allowed only via CDN with integrity hashes and MUST have a zero-dependency fallback.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Single User, Local Data
+All data persists in localStorage. No server, no database, no accounts. Data migration from v1 MUST be seamless (read existing `lucyVocab` key and upgrade schema in place).
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Mobile-First Design
+Primary device is an iPhone used by a 7-year-old. Touch targets MUST be minimum 44x44px. Viewport range: 320-480px. All interactions MUST work with touch only (no hover-dependent UI).
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Component Separation
+Unlike v1 (single 3,500-line HTML file), v2 MUST use a clean file structure: separate CSS, JS modules, and HTML. ES modules with `type="module"` for script loading. No build step required.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### VI. Preserve What Works
+v1's game mechanics, mastery system, word list and engagement features are validated with a real user. The rebuild preserves all v1 functionality unless explicitly scoped out in a spec. The spaced repetition algorithm, XP system, streak mechanics, theme system and practice modes MUST carry over.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### VII. Accessibility
+TTS pronunciation and speech recognition MUST remain. Sufficient color contrast in all themes. Focus states for any keyboard/switch navigation. No reliance on color alone for mastery state (use icons or labels as secondary indicator).
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+### VIII. Content Separation
+Word lists, context sentences and other learning content MUST live in dedicated data files, separate from UI and logic code. Adding a new word set MUST require only creating or editing a data file and registering it -- no changes to practice modes, UI components or core systems.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### IX. Extensible by Design
+The architecture MUST support adding new practice modes (e.g. character writing) without modifying existing mode files. Each mode MUST be a self-contained module that registers itself with the practice system. Core systems (data, UI shell, engagement) MUST expose stable interfaces that new modules can consume.
+
+## Tech Stack
+
+- **Language**: Vanilla JavaScript (ES2022+), CSS3 with custom properties, HTML5
+- **Hosting**: GitHub Pages (suburban-sungod/lucy-vocab, main branch)
+- **Offline**: Service worker with network-first caching strategy
+- **Audio**: Web Speech API (zh-CN TTS, webkitSpeechRecognition)
+- **Data**: localStorage with JSON serialization
+- **Icons/Assets**: Inline SVG preferred, base64 for photos
+
+## Deployment
+
+- Push to `main` triggers GitHub Pages rebuild
+- Bump `CACHE_VERSION` in service worker with every deploy
+- Service worker auto-reloads the app on the user's device when new version detected
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+- Constitution is checked at every spec phase. Specs, plans and tasks that violate these principles MUST be flagged
+- Amendments require updating this file and noting the change in the sync impact report
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.2.0 | **Ratified**: 2026-03-06 | **Last Amended**: 2026-03-06

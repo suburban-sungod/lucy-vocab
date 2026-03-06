@@ -1,0 +1,129 @@
+.progress-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 20px 0;
+}
+
+.progress-streak-display {
+  text-align: center;
+}
+
+.progress-streak-number {
+  font-size: 4rem;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.progress-streak-label {
+  font-size: 1rem;
+  color: var(--text2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.progress-streak-label .flame {
+  font-size: 1.2rem;
+}
+
+.progress-best-streak {
+  font-size: 0.85rem;
+  color: var(--text2);
+  margin-top: 4px;
+}
+
+/* 5-week calendar */
+.progress-calendar {
+  width: 100%;
+}
+
+.progress-calendar-title {
+  font-size: 0.9rem;
+  color: var(--text2);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.progress-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.progress-calendar-day {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  color: var(--text2);
+}
+
+.progress-calendar-day.practiced {
+  background: var(--accent);
+  color: #fff;
+}
+
+.progress-calendar-day.today {
+  border: 2px solid var(--accent);
+}
+
+/* Daily prizes */
+.progress-prizes {
+  width: 100%;
+}
+
+.progress-prizes-title {
+  font-size: 0.9rem;
+  color: var(--text2);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.progress-prize-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.progress-prize {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.progress-prize.claimed {
+  opacity: 0.6;
+}
+
+.progress-prize.highlighted {
+  border: 2px solid var(--gold);
+}
+
+.progress-prize-days {
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 40px;
+}
+
+.progress-prize-amount {
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.progress-prize-status {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: var(--text2);
+}

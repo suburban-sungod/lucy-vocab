@@ -1,0 +1,107 @@
+.mastery-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  padding: 12px 0;
+}
+
+.grid-tile {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.grid-tile:active {
+  transform: scale(0.95);
+}
+
+/* Mastery border colors */
+.grid-tile.mastered { border-color: var(--green); }
+.grid-tile.fading { border-color: var(--gold); }
+.grid-tile.needs-review { border-color: var(--red); }
+.grid-tile.learning { border-color: var(--accent); }
+.grid-tile.unseen { border-color: var(--surface2); }
+
+/* Mastery icon overlay */
+.grid-tile-icon {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  font-size: 0.6rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.grid-tile.mastered .grid-tile-icon {
+  background: var(--green);
+  color: #000;
+}
+
+.grid-tile.fading .grid-tile-icon {
+  background: var(--gold);
+  color: #000;
+}
+
+.grid-tile.needs-review .grid-tile-icon {
+  background: var(--red);
+  color: #fff;
+}
+
+.grid-tile.learning .grid-tile-icon {
+  background: var(--accent);
+  color: #fff;
+}
+
+.grid-tile-hanzi {
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.grid-tile-english {
+  font-size: 0.55rem;
+  color: var(--text2);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* Grid screen header */
+.grid-header {
+  text-align: center;
+  padding: 8px 0 12px;
+}
+
+.grid-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.grid-subtitle {
+  font-size: 0.85rem;
+  color: var(--text2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 340px) {
+  .mastery-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
