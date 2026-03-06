@@ -28,29 +28,25 @@ function renderBottomNav({ onNavigate }) {
   const nav = document.getElementById('bottom-nav');
 
   nav.innerHTML = `
-    <div style="display:flex;justify-content:center;gap:4px;padding:10px 16px;padding-bottom:calc(10px + env(safe-area-inset-bottom, 0px));background:var(--surface);border-radius:20px;margin:8px 16px;position:fixed;bottom:8px;left:50%;transform:translateX(-50%);max-width:448px;width:calc(100% - 32px);z-index:30;">
-      <button class="nav-btn active" data-screen="home" style="flex:1;min-height:44px;border-radius:16px;background:transparent;color:var(--text);border:none;font-size:0.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;">
-        <span style="font-size:1.2rem;">&#x1F3E0;</span>
-        <span>Home</span>
+    <div class="bottom-nav-bar">
+      <button class="nav-btn active" data-screen="home">
+        <span class="nav-icon">&#x1F3E0;</span>
+        <span class="nav-label">Home</span>
       </button>
-      <button class="nav-btn" data-screen="grid" style="flex:1;min-height:44px;border-radius:16px;background:transparent;color:var(--text2);border:none;font-size:0.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;">
-        <span style="font-size:1.2rem;">&#x1F4CA;</span>
-        <span>Mastery</span>
+      <button class="nav-btn" data-screen="grid">
+        <span class="nav-icon">&#x1F4CA;</span>
+        <span class="nav-label">Mastery</span>
       </button>
-      <button class="nav-btn" data-screen="progress" style="flex:1;min-height:44px;border-radius:16px;background:transparent;color:var(--text2);border:none;font-size:0.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;">
-        <span style="font-size:1.2rem;">&#x1F4C5;</span>
-        <span>Progress</span>
+      <button class="nav-btn" data-screen="progress">
+        <span class="nav-icon">&#x1F4C5;</span>
+        <span class="nav-label">Progress</span>
       </button>
     </div>
   `;
 
   nav.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      nav.querySelectorAll('.nav-btn').forEach(b => {
-        b.style.color = 'var(--text2)';
-        b.classList.remove('active');
-      });
-      btn.style.color = 'var(--text)';
+      nav.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       if (onNavigate) onNavigate(btn.dataset.screen);
     });

@@ -6,28 +6,18 @@ registerMode('writing', {
   name: 'Writing Practice',
 
   setup(container, { words, onComplete, onAnswer }) {
-    const MAX_ROUNDS = 3;
     const results = [];
-    const attempts = {};
-    words.forEach(w => { attempts[w.hanzi] = 0; });
-
-    // Build queue: cycle through all words, 3 rounds
-    // Round 1: all 5 words shuffled, Round 2: reshuffled, Round 3: reshuffled
-    const queue = [];
-    for (let round = 0; round < MAX_ROUNDS; round++) {
-      const shuffled = [...words].sort(() => Math.random() - 0.5);
-      shuffled.forEach(w => queue.push({ word: w, round: round + 1 }));
-    }
-    let queueIndex = 0;
+    // Single pass through shuffled words; "needs practice" words get re-queued
+    const queue = [...words].sort(() => Math.random() - 0.5);
+    let currentIndex = 0;
 
     function renderPrompt() {
-      if (queueIndex >= queue.length) {
+      if (currentIndex >= queue.length) {
         onComplete(results);
         return;
       }
 
-      const { word, round } = queue[queueIndex];
-      attempts[word.hanzi]++;
+      const word = queue[currentIndex];
 
       if (hasTTS()) {
         speakChinese(word.hanzi);
@@ -38,7 +28,7 @@ registerMode('writing', {
           <div class="writing-instruction">Write this character on paper</div>
           <button class="writing-replay-btn" id="writing-replay">&#x1f50a;</button>
           ${!hasTTS() ? `<div style="font-size:1.5rem;color:var(--accent);margin-bottom:16px;">${word.pinyin}</div>` : ''}
-          <div class="writing-attempt-counter">Round ${round} of ${MAX_ROUNDS} &middot; ${queueIndex + 1} of ${queue.length}</div>
+          <div class="writing-attempt-counter">${currentIndex + 1} of ${queue.length}</div>
           <button class="writing-reveal-btn" id="writing-reveal">Show Answer</button>
         </div>
       `;
@@ -70,7 +60,7 @@ registerMode('writing', {
         updateWordMastery(word.hanzi, true);
         results.push(true);
         if (onAnswer) onAnswer(true, word);
-        queueIndex++;
+        currentIndex++;
         renderPrompt();
       });
 
@@ -78,7 +68,9 @@ registerMode('writing', {
         updateWordMastery(word.hanzi, false);
         results.push(false);
         if (onAnswer) onAnswer(false, word);
-        queueIndex++;
+        // Re-queue this word at the end
+        queue.push(word);
+        currentIndex++;
         renderPrompt();
       });
     }

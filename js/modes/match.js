@@ -71,7 +71,8 @@ registerMode('match', {
       `;
 
       if (audioOnly) {
-        speakChinese(word.hanzi);
+        // Short delay to ensure DOM is ready — helps iOS autoplay
+        setTimeout(() => speakChinese(word.hanzi), 150);
         const audioBtn = container.querySelector('#match-audio');
         if (audioBtn) audioBtn.addEventListener('click', () => speakChinese(word.hanzi));
       }
