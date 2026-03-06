@@ -1,4 +1,4 @@
-const CACHE_VERSION = 2;
+const CACHE_VERSION = 3;
 const CACHE_NAME = `lucy-vocab-v${CACHE_VERSION}`;
 
 const PRECACHE_URLS = [
