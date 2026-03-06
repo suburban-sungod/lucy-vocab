@@ -4,19 +4,19 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 28px;
   text-align: center;
   padding: 20px 0;
 }
 
 .home-greeting {
-  font-size: 1.3rem;
+  font-size: 1.6rem;
   color: var(--text2);
 }
 
 .home-start-btn {
-  width: 72px;
-  height: 72px;
+  width: 88px;
+  height: 88px;
   border-radius: 50%;
   background: var(--gold);
   color: #000;
@@ -43,8 +43,8 @@
 .home-sessions {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 1.1rem;
+  gap: 10px;
+  font-size: 1.2rem;
   color: var(--text);
 }
 
@@ -59,8 +59,8 @@
 }
 
 .home-session-dot {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: var(--surface2);
   transition: background 0.3s ease;
@@ -73,19 +73,19 @@
 .home-streak {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 1rem;
+  gap: 8px;
+  font-size: 1.15rem;
   color: var(--text2);
 }
 
 .home-streak .flame {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 }
 
 .home-streak .streak-num {
   font-weight: 700;
   color: var(--text);
-  font-size: 1.1rem;
+  font-size: 1.3rem;
 }
 
 .home-mastery-summary {
@@ -99,7 +99,7 @@
 }
 
 .home-mastery-count {
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   font-weight: 700;
 }
 
@@ -108,7 +108,7 @@
 .home-mastery-count.new { color: var(--text2); }
 
 .home-mastery-label {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: var(--text2);
   text-transform: uppercase;
   letter-spacing: 0.5px;

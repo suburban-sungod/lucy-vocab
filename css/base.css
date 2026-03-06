@@ -41,6 +41,8 @@ body {
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 .screen {
@@ -48,12 +50,24 @@ body {
   flex: 1;
   overflow-y: auto;
   padding: 16px;
-  padding-bottom: 80px;
+  padding-bottom: 100px;
 }
 
 .screen.active {
   display: flex;
   flex-direction: column;
+}
+
+/* Practice screen needs vertical centering */
+#screen-practice.active {
+  justify-content: flex-start;
+}
+
+#screen-practice #practice-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 button {
