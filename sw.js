@@ -1,4 +1,4 @@
-const CACHE_VERSION = 3;
+const CACHE_VERSION = 4;
 const CACHE_NAME = `lucy-vocab-v${CACHE_VERSION}`;
 
 const PRECACHE_URLS = [
@@ -39,6 +39,12 @@ const PRECACHE_URLS = [
   'assets/favicon.png',
   'assets/icon-1024.png'
 ];
+
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
