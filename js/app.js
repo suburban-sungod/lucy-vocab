@@ -79,7 +79,9 @@ function refreshScreen() {
       renderProgress(container);
       break;
     case 'shop':
-      renderShop(container);
+      renderShop(container, {
+        onThemeChange: () => renderNav({ onNavigate: (screen) => showScreen(screen) })
+      });
       break;
   }
 }

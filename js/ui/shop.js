@@ -1,11 +1,14 @@
 import { getState } from '../state.js';
 import { SHOP_ITEMS, SHOP_CATEGORIES } from '../data/shop-items.js';
 import { purchaseItem, equipItem, unequipItem, isItemOwned, isItemEquipped, getLevel } from '../engagement.js';
-import { spawnCoins } from '../animations.js';
+import { spawnCoins, spawnCelebration, spawnConfetti } from '../animations.js';
 
 let activeCategory = 'themes';
+let refreshNav = null;
 
-export function renderShop(container) {
+export function renderShop(container, { onThemeChange } = {}) {
+  if (onThemeChange) refreshNav = onThemeChange;
+
   const state = getState();
   const level = getLevel(state.xp);
   const progress = level.nextLevel
@@ -38,6 +41,8 @@ export function renderShop(container) {
       <div class="grid grid-cols-2 gap-3" id="shop-items">
         ${renderItems(activeCategory)}
       </div>
+
+      ${activeCategory === 'skins' ? renderSkinPreview() : ''}
     </div>
 
     <!-- Purchase Confirmation -->
@@ -68,16 +73,18 @@ export function renderShop(container) {
     const item = SHOP_ITEMS.find(i => i.id === card.dataset.itemId);
     if (!item) return;
 
+    const currentState = getState();
+
     if (isItemOwned(item)) {
-      // Toggle equip
       if (isItemEquipped(item)) {
         if (item.category !== 'themes') unequipItem(item.category);
       } else {
         equipItem(item);
+        showEquipFeedback(item);
       }
+      if (item.category === 'themes' && refreshNav) refreshNav();
       renderShop(container);
-    } else if (state.xp >= item.price) {
-      // Show purchase confirmation
+    } else if (currentState.xp >= item.price) {
       showConfirm(container, item);
     }
   });
@@ -94,7 +101,7 @@ function renderItems(category) {
 
     let preview = '';
     if (item.preview) {
-      preview = `<div class="w-10 h-10 rounded-full mx-auto mb-2" style="background: ${item.preview}"></div>`;
+      preview = `<div class="w-10 h-10 rounded-full mx-auto mb-2 shadow-card-sm" style="background: ${item.preview}"></div>`;
     } else if (item.category === 'skins') {
       const icons = { 'skin-gradient': '\u{1F308}', 'skin-glass': '\u{1FA9F}', 'skin-neon-border': '\u{1F4A0}' };
       preview = `<div class="text-3xl mb-2">${icons[item.cssClass] || '\u{2728}'}</div>`;
@@ -105,7 +112,7 @@ function renderItems(category) {
 
     let badge = '';
     if (equipped) {
-      badge = '<div class="absolute top-2 right-2 w-6 h-6 rounded-full bg-green text-black text-xs font-bold flex items-center justify-center">\u2713</div>';
+      badge = '<div class="absolute top-2 right-2 w-6 h-6 rounded-full bg-green text-white text-xs font-bold flex items-center justify-center">\u2713</div>';
     } else if (owned) {
       badge = '<div class="absolute top-2 right-2 text-xs text-green font-semibold">Owned</div>';
     }
@@ -124,6 +131,29 @@ function renderItems(category) {
       </button>
     `;
   }).join('');
+}
+
+function renderSkinPreview() {
+  const skin = getState().equippedSkin || '';
+  const skinClass = skin ? ` ${skin}` : '';
+
+  return `
+    <div class="card p-4">
+      <div class="text-xs text-txt2 uppercase tracking-wider font-semibold mb-3">Preview</div>
+      <div class="flashcard-container mx-auto w-[140px]${skinClass}">
+        <div class="flashcard-face rounded-xl bg-[var(--surface)] shadow-card flex flex-col items-center justify-center p-4 border border-[var(--border)] aspect-[3/4]">
+          <div class="text-3xl font-bold">&#x5B57;</div>
+          <div class="text-xs text-txt2 mt-1">character</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function showEquipFeedback(item) {
+  if (item.category === 'celebrations') {
+    setTimeout(() => spawnCelebration(item.effectId), 200);
+  }
 }
 
 function showConfirm(container, item) {
@@ -148,6 +178,8 @@ function showConfirm(container, item) {
     if (result.success) {
       spawnCoins(10);
       equipItem(item);
+      showEquipFeedback(item);
+      if (item.category === 'themes' && refreshNav) refreshNav();
     }
     cleanup();
     renderShop(container);
