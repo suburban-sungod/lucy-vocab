@@ -9,11 +9,12 @@ import { getMode } from './modes/mode-registry.js';
 import { renderHome } from './ui/home.js';
 import { renderGrid } from './ui/grid.js';
 import { renderProgress } from './ui/progress.js';
+import { renderShop } from './ui/shop.js';
 import { renderNav, hideNav, showNav } from './ui/nav.js';
-import { renderResults, renderThemePicker, clearOverlays } from './ui/overlays.js';
+import { renderResults, clearOverlays } from './ui/overlays.js';
 import { startSession, getSession, advanceStep, getCurrentStepInfo, endSession, recordAnswer, setSessionEndCallback } from './session.js';
 import { handleCorrectAnswer, handleWrongAnswer, checkDailyRewards, checkAnswerStreakRewards, addXP } from './engagement.js';
-import { spawnCoins, spawnConfetti, showSadie, showBadgeToast, showXPPopup, showReward } from './animations.js';
+import { spawnCoins, spawnConfetti, spawnCelebration, showSadie, showBadgeToast, showXPPopup, showReward } from './animations.js';
 
 let currentScreen = 'home';
 
@@ -35,8 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Set up nav
   renderNav({
-    onNavigate: (screen) => showScreen(screen),
-    onThemePicker: () => renderThemePicker({ onClose: () => refreshScreen() })
+    onNavigate: (screen) => showScreen(screen)
   });
 
   // Render initial screen
@@ -77,6 +77,9 @@ function refreshScreen() {
       break;
     case 'progress':
       renderProgress(container);
+      break;
+    case 'shop':
+      renderShop(container);
       break;
   }
 }
@@ -123,7 +126,6 @@ function runSessionStep() {
     });
   } else if (info.step === 'practice') {
     if (session.type === 'mini-drill') {
-      // Mini-drill: 3-4 match questions for this word
       const mode = getMode('match');
       mode.setup(content, {
         words: [session.word, ...getRandomWords(3, [session.word.hanzi])],
@@ -140,7 +142,6 @@ function runSessionStep() {
       mode.setup(content, {
         questionCount: 10,
         onComplete: (roundResults) => {
-          // Check for perfect round
           if (roundResults && roundResults.every(r => r)) {
             const state = getState();
             if (modeId === 'match') state._perfectMatch = true;
@@ -170,7 +171,6 @@ function runSessionStep() {
     showNav();
     showScreen('home');
 
-    // Check daily rewards
     const dailyRewards = checkDailyRewards();
     dailyRewards.forEach(r => {
       setTimeout(() => showReward(r.amount, 'Daily Streak Reward!', `${r.days}-day streak`), 500);
@@ -183,7 +183,14 @@ function runSessionStep() {
 
     if (results.correct > 0 && results.total > 0) {
       const pct = results.correct / results.total;
-      if (pct >= 0.8) spawnConfetti(20);
+      if (pct >= 0.8) {
+        const equipped = getState().equippedCelebration;
+        if (equipped) {
+          spawnCelebration(equipped);
+        } else {
+          spawnConfetti(20);
+        }
+      }
     }
   }
 }
@@ -193,18 +200,15 @@ function processAnswer(correct, word) {
     const result = handleCorrectAnswer();
     recordAnswer(true, null);
 
-    // Update session XP tracking
     const session = getSession();
     if (session) session.results.xpEarned += result.xp;
 
-    // Animations
     spawnCoins(5);
     if (result.mystery) showXPPopup('2x XP!');
     if (result.levelUp) showXPPopup(`Level up: ${result.levelName}!`);
     result.badges.forEach(b => showBadgeToast(b));
     if (result.streak > 0 && result.streak % 10 === 0) showSadie();
 
-    // Check answer streak rewards
     const streakReward = checkAnswerStreakRewards();
     if (streakReward) {
       setTimeout(() => showReward(streakReward.amount, 'Answer Streak Reward!', `${streakReward.streak} correct in a row`), 500);

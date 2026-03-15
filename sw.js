@@ -1,4 +1,4 @@
-const CACHE_VERSION = 7;
+const CACHE_VERSION = 8;
 const CACHE_NAME = `lucy-vocab-v${CACHE_VERSION}`;
 
 const PRECACHE_URLS = [
@@ -18,6 +18,7 @@ const PRECACHE_URLS = [
   'js/data/sentences.js',
   'js/data/badges.js',
   'js/data/themes.js',
+  'js/data/shop-items.js',
   'js/modes/mode-registry.js',
   'js/modes/flashcard.js',
   'js/modes/match.js',
@@ -29,6 +30,7 @@ const PRECACHE_URLS = [
   'js/ui/progress.js',
   'js/ui/nav.js',
   'js/ui/overlays.js',
+  'js/ui/shop.js',
   'assets/sadie.js',
   'assets/apple-touch-icon.png',
   'assets/favicon.png',

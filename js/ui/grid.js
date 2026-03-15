@@ -7,12 +7,12 @@ const STATE_BORDER = {
   'fading': 'border-gold',
   'needs-review': 'border-red',
   'learning': 'border-accent',
-  'unseen': 'border-surface2'
+  'unseen': 'border-[var(--border)]'
 };
 
 const STATE_BADGE_BG = {
-  'mastered': 'bg-green text-black',
-  'fading': 'bg-gold text-black',
+  'mastered': 'bg-green text-white',
+  'fading': 'bg-gold text-white',
   'needs-review': 'bg-red text-white',
   'learning': 'bg-accent text-white',
 };
@@ -28,11 +28,11 @@ export function renderGrid(container, { onPracticeWord }) {
   const summary = getMasterySummary();
 
   container.innerHTML = `
-    <div class="text-center py-2 pb-3">
+    <div class="text-center py-3 pb-4">
       <div class="text-xl font-bold">Mastery Grid</div>
-      <div class="text-sm text-txt2">${summary.mastered} mastered &middot; ${summary.learning + summary.fading + summary.needsReview} learning &middot; ${summary.unseen} new</div>
+      <div class="text-sm text-txt2 mt-1">${summary.mastered} mastered &middot; ${summary.learning + summary.fading + summary.needsReview} learning &middot; ${summary.unseen} new</div>
     </div>
-    <div class="grid grid-cols-5 gap-2 py-3 pb-6" id="mastery-grid"></div>
+    <div class="grid grid-cols-5 gap-2.5 pb-6" id="mastery-grid"></div>
   `;
 
   const grid = container.querySelector('#mastery-grid');
@@ -45,10 +45,10 @@ export function renderGrid(container, { onPracticeWord }) {
     const displayEnglish = word.english.length > 10 ? word.english.slice(0, 9) + '...' : word.english;
 
     const tile = document.createElement('button');
-    tile.className = `relative aspect-square rounded-xl bg-surface flex flex-col items-center justify-center p-1 border-2 ${STATE_BORDER[state]} active:scale-95 transition-transform`;
+    tile.className = `relative aspect-square rounded-xl bg-[var(--surface)] shadow-card-sm flex flex-col items-center justify-center p-1 border-2 ${STATE_BORDER[state]} active:scale-95 transition-transform`;
 
     const badge = state !== 'unseen'
-      ? `<span class="absolute top-1 right-1 text-[0.6rem] w-3.5 h-3.5 rounded-full flex items-center justify-center leading-none ${STATE_BADGE_BG[state]}">${STATE_ICONS[state]}</span>`
+      ? `<span class="absolute top-1 right-1 text-[0.5rem] w-3.5 h-3.5 rounded-full flex items-center justify-center leading-none ${STATE_BADGE_BG[state]}">${STATE_ICONS[state]}</span>`
       : '';
 
     tile.innerHTML = `

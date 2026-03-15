@@ -1,12 +1,27 @@
-/* Themes: override CSS custom properties per theme */
+/* Dark mode */
+[data-theme="dark"] {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface2: #334155;
+  --text: #f1f5f9;
+  --text2: #94a3b8;
+  --border: #475569;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
+}
 
 [data-theme="sakura"] {
-  --bg: #1a0f14;
-  --accent: #f472b6;
-  --surface: #2a1520;
-  --surface2: #3a2030;
-  --text: #fce7f3;
-  --text2: #b0708a;
+  --bg: #fdf2f8;
+  --accent: #ec4899;
+  --surface: #ffffff;
+  --surface2: #fce7f3;
+  --text: #831843;
+  --text2: #be185d;
+  --border: #fbcfe8;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 12px rgba(236,72,153,0.1);
+  --shadow-lg: 0 8px 24px rgba(236,72,153,0.15);
 }
 
 [data-theme="ocean"] {
@@ -16,15 +31,23 @@
   --surface2: #1e3a5f;
   --text: #e0f2fe;
   --text2: #7da8c8;
+  --border: #2a4a6f;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
 }
 
 [data-theme="sunset"] {
-  --bg: #1a120a;
-  --accent: #fb923c;
-  --surface: #2a1a10;
-  --surface2: #3a2818;
-  --text: #fff7ed;
-  --text2: #b8906a;
+  --bg: #fff7ed;
+  --accent: #f97316;
+  --surface: #ffffff;
+  --surface2: #ffedd5;
+  --text: #7c2d12;
+  --text2: #c2410c;
+  --border: #fed7aa;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 12px rgba(249,115,22,0.1);
+  --shadow-lg: 0 8px 24px rgba(249,115,22,0.15);
 }
 
 [data-theme="neon"] {
@@ -34,6 +57,10 @@
   --surface2: #1e1e1e;
   --text: #ecfdf5;
   --text2: #6ee7b7;
+  --border: #2a2a2a;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(52,211,153,0.15);
+  --shadow-lg: 0 8px 24px rgba(52,211,153,0.2);
 }
 
 [data-theme="midnight"] {
@@ -43,10 +70,14 @@
   --surface2: #222240;
   --text: #e8e8f8;
   --text2: #7878aa;
+  --border: #333360;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.5);
 }
 
 /* Derived accent variants */
 [data-theme] {
-  --accent-soft: color-mix(in srgb, var(--accent) 20%, transparent);
-  --accent-medium: color-mix(in srgb, var(--accent) 40%, transparent);
+  --accent-soft: color-mix(in srgb, var(--accent) 10%, transparent);
+  --accent-medium: color-mix(in srgb, var(--accent) 25%, transparent);
 }

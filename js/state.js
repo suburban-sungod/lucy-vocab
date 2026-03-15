@@ -3,7 +3,7 @@ let persistenceAvailable = true;
 
 function defaultState() {
   return {
-    schemaVersion: 2,
+    schemaVersion: 3,
     xp: 0,
     streak: 0,
     bestStreak: 0,
@@ -26,7 +26,10 @@ function defaultState() {
     _lightningPairs: false,
     activeStatsTab: 'progress',
     sessionsToday: 0,
-    lastSessionDate: ''
+    lastSessionDate: '',
+    purchasedItems: [],
+    equippedSkin: null,
+    equippedCelebration: null
   };
 }
 
@@ -62,6 +65,14 @@ function migrateState() {
     state.schemaVersion = 2;
     state.sessionsToday = 0;
     state.lastSessionDate = '';
+  }
+
+  // v2 → v3 migration
+  if (state.schemaVersion === 2) {
+    state.schemaVersion = 3;
+    state.purchasedItems = [];
+    state.equippedSkin = null;
+    state.equippedCelebration = null;
   }
 
   // Backfill any missing fields
@@ -108,7 +119,7 @@ function showPersistenceWarning() {
     position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
     background: var(--surface2); color: var(--text); padding: 12px 20px;
     border-radius: 12px; font-size: 0.85rem; z-index: 300;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    box-shadow: var(--shadow-lg);
   `;
   toast.textContent = "Progress won't be saved this session";
   document.body.appendChild(toast);

@@ -1,6 +1,7 @@
 import { registerMode } from './mode-registry.js';
 import { speakChinese, hasTTS } from '../audio.js';
 import { getWordState, updateWordMastery } from '../mastery.js';
+import { getState } from '../state.js';
 
 registerMode('flashcard', {
   name: 'Flashcard Review',
@@ -16,25 +17,27 @@ registerMode('flashcard', {
 
       const word = words[currentIndex];
       const mastery = getWordState(word.hanzi);
+      const skin = getState().equippedSkin || '';
+      const skinClass = skin ? ` ${skin}` : '';
 
       container.innerHTML = `
-        <div class="flashcard-container w-full max-w-[300px] mx-auto">
+        <div class="flashcard-container w-full max-w-[300px] mx-auto${skinClass}">
           <div class="flashcard relative w-full aspect-[3/4] cursor-pointer" id="flashcard">
-            <div class="flashcard-face absolute inset-0 rounded-2xl bg-surface flex flex-col items-center justify-center p-6 gap-3">
+            <div class="flashcard-face absolute inset-0 rounded-2xl bg-[var(--surface)] shadow-card-lg flex flex-col items-center justify-center p-6 gap-3 border border-[var(--border)]">
               <div class="text-5xl font-bold leading-tight text-center">${word.hanzi}</div>
               ${hasTTS() ? '<button class="w-11 h-11 rounded-full bg-surface2 text-txt flex items-center justify-center text-lg active:bg-accent transition-colors" id="fc-audio">&#x1f50a;</button>' : ''}
             </div>
-            <div class="flashcard-face flashcard-back absolute inset-0 rounded-2xl bg-surface flex flex-col items-center justify-center p-6 gap-3">
+            <div class="flashcard-face flashcard-back absolute inset-0 rounded-2xl bg-[var(--surface)] shadow-card-lg flex flex-col items-center justify-center p-6 gap-3 border border-[var(--border)]">
               <div class="text-xl text-txt2">${word.pinyin}</div>
               <div class="text-lg text-txt">${word.english}</div>
             </div>
           </div>
-          <div class="flex gap-1.5 justify-center mt-2">
+          <div class="flex gap-1.5 justify-center mt-3">
             ${[0, 1, 2].map(i => `<div class="w-2.5 h-2.5 rounded-full ${i < mastery.streak ? 'bg-green' : 'bg-surface2'}"></div>`).join('')}
           </div>
           <div class="flex gap-4 justify-center mt-5" id="fc-actions" style="visibility: hidden;">
-            <button class="min-w-[44px] min-h-[44px] px-6 py-3 rounded-3xl bg-red text-white font-semibold active:scale-95 transition-transform" id="fc-need">Need practice</button>
-            <button class="min-w-[44px] min-h-[44px] px-6 py-3 rounded-3xl bg-green text-black font-semibold active:scale-95 transition-transform" id="fc-got">Got it!</button>
+            <button class="min-w-[44px] min-h-[44px] px-6 py-3 rounded-3xl bg-red text-white font-semibold active:scale-95 transition-transform shadow-card" id="fc-need">Need practice</button>
+            <button class="min-w-[44px] min-h-[44px] px-6 py-3 rounded-3xl bg-green text-white font-semibold active:scale-95 transition-transform shadow-card" id="fc-got">Got it!</button>
           </div>
         </div>
       `;

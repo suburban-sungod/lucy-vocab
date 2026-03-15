@@ -1,18 +1,23 @@
-/* Core: CSS custom properties, keyframes, and styles Tailwind can't express */
+/* Core: design tokens, keyframes, and styles Tailwind can't express */
 
 :root {
-  --bg: #0f172a;
-  --surface: #1e293b;
-  --surface2: #334155;
+  /* Light mode defaults */
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface2: #f1f5f9;
   --accent: #6366f1;
-  --accent2: #f472b6;
-  --gold: #fbbf24;
-  --green: #34d399;
-  --red: #f87171;
-  --text: #f1f5f9;
-  --text2: #94a3b8;
-  --accent-soft: color-mix(in srgb, var(--accent) 20%, transparent);
-  --accent-medium: color-mix(in srgb, var(--accent) 40%, transparent);
+  --accent2: #ec4899;
+  --gold: #f59e0b;
+  --green: #10b981;
+  --red: #ef4444;
+  --text: #1e293b;
+  --text2: #64748b;
+  --border: #e2e8f0;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+  --accent-soft: color-mix(in srgb, var(--accent) 10%, transparent);
+  --accent-medium: color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
 *, *::before, *::after {
@@ -49,6 +54,21 @@ html, body {
   justify-content: center;
 }
 
+/* Card utility */
+.card {
+  background: var(--surface);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+}
+
+.card-sm {
+  background: var(--surface);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+}
+
 /* Flashcard 3D flip */
 .flashcard-container {
   perspective: 1000px;
@@ -56,7 +76,7 @@ html, body {
 
 .flashcard {
   transform-style: preserve-3d;
-  transition: transform 0.5s ease;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .flashcard.flipped {
@@ -69,6 +89,22 @@ html, body {
 
 .flashcard-back {
   transform: rotateY(180deg);
+}
+
+/* Card skins */
+.skin-gradient .flashcard-face {
+  background: linear-gradient(135deg, var(--surface), var(--surface2));
+}
+
+.skin-glass .flashcard-face {
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.skin-neon-border .flashcard-face {
+  box-shadow: 0 0 15px var(--accent-medium), inset 0 0 15px var(--accent-soft);
+  border: 2px solid var(--accent);
 }
 
 /* Keyframes */
@@ -117,26 +153,12 @@ html, body {
   transition: all 0.3s ease;
 }
 
-/* Shake animation class */
-.animate-shake {
-  animation: shake 0.4s ease;
-}
-
-.animate-pop {
-  animation: pop 0.3s ease;
-}
-
-.animate-pulse {
-  animation: pulse 2s infinite;
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.2s ease;
-}
-
-.animate-slideUp {
-  animation: slideUp 0.3s ease;
-}
+/* Animation utility classes */
+.animate-shake { animation: shake 0.4s ease; }
+.animate-pop { animation: pop 0.3s ease; }
+.animate-pulse { animation: pulse 2s infinite; }
+.animate-fadeIn { animation: fadeIn 0.2s ease; }
+.animate-slideUp { animation: slideUp 0.3s ease; }
 
 /* Hidden utility */
 .hidden {

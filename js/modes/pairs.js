@@ -7,7 +7,6 @@ registerMode('pairs', {
 
   setup(container, { questionCount = 10, onComplete, onAnswer }) {
     let slotsUsed = 0;
-    let boardNum = 0;
     const results = [];
 
     function renderBoard() {
@@ -16,7 +15,6 @@ registerMode('pairs', {
         return;
       }
 
-      boardNum++;
       const boardWords = [...WORDS].sort(() => Math.random() - 0.5).slice(0, 4);
       const tiles = [];
 
@@ -40,7 +38,7 @@ registerMode('pairs', {
           }).join('')}
         </div>
         <div class="grid grid-cols-4 gap-2.5 py-3 max-w-[400px] mx-auto w-full" id="pairs-board">
-          ${tiles.map((t, i) => `<button class="pairs-tile min-h-[64px] p-2.5 rounded-xl bg-surface text-txt text-sm font-medium text-center flex items-center justify-center border-2 border-transparent transition-all break-words" data-index="${i}" data-hanzi="${t.word.hanzi}" data-type="${t.type}">${t.text}</button>`).join('')}
+          ${tiles.map((t, i) => `<button class="pairs-tile min-h-[64px] p-2.5 rounded-xl bg-[var(--surface)] shadow-card-sm text-txt text-sm font-medium text-center flex items-center justify-center border border-[var(--border)] transition-all break-words" data-index="${i}" data-hanzi="${t.word.hanzi}" data-type="${t.type}">${t.text}</button>`).join('')}
         </div>
       `;
 
@@ -52,11 +50,11 @@ registerMode('pairs', {
 
         if (selected === null) {
           selected = tile;
-          tile.classList.remove('border-transparent');
-          tile.classList.add('border-accent', 'bg-[var(--accent-soft)]');
+          tile.style.borderColor = 'var(--accent)';
+          tile.style.background = 'var(--accent-soft)';
         } else if (tile === selected) {
-          tile.classList.remove('border-accent', 'bg-[var(--accent-soft)]');
-          tile.classList.add('border-transparent');
+          tile.style.borderColor = '';
+          tile.style.background = '';
           selected = null;
         } else {
           const h1 = selected.dataset.hanzi;
@@ -65,8 +63,8 @@ registerMode('pairs', {
           const t2 = tile.dataset.type;
 
           if (h1 === h2 && t1 !== t2) {
-            // Correct match
-            selected.classList.remove('border-accent', 'bg-[var(--accent-soft)]');
+            selected.style.borderColor = '';
+            selected.style.background = '';
             selected.classList.add('pairs-tile-matched');
             tile.classList.add('pairs-tile-matched');
             matchedCount++;
@@ -85,10 +83,10 @@ registerMode('pairs', {
               setTimeout(() => renderBoard(), 400);
             }
           } else {
-            // Wrong match
-            selected.classList.remove('border-accent', 'bg-[var(--accent-soft)]');
-            selected.classList.add('border-red', 'animate-shake');
-            tile.classList.add('border-red', 'animate-shake');
+            selected.style.borderColor = 'var(--red)';
+            selected.classList.add('animate-shake');
+            tile.style.borderColor = 'var(--red)';
+            tile.classList.add('animate-shake');
             slotsUsed++;
             results.push(false);
 
@@ -99,10 +97,11 @@ registerMode('pairs', {
 
             const prevSelected = selected;
             setTimeout(() => {
-              prevSelected.classList.remove('border-red', 'animate-shake');
-              prevSelected.classList.add('border-transparent');
-              tile.classList.remove('border-red', 'animate-shake');
-              tile.classList.add('border-transparent');
+              prevSelected.style.borderColor = '';
+              prevSelected.style.background = '';
+              prevSelected.classList.remove('animate-shake');
+              tile.style.borderColor = '';
+              tile.classList.remove('animate-shake');
             }, 400);
 
             selected = null;

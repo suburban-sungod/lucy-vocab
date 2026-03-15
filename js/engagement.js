@@ -6,17 +6,22 @@ import { getWordState } from './mastery.js';
 
 const LEVELS = [
   { name: 'Beginner', xp: 0 },
-  { name: 'Intermediate', xp: 200 },
-  { name: 'Advanced', xp: 500 },
+  { name: 'Explorer', xp: 100 },
+  { name: 'Scholar', xp: 300 },
+  { name: 'Advanced', xp: 600 },
   { name: 'Master', xp: 1000 }
 ];
 
 export function getLevel(xp) {
   let level = LEVELS[0];
-  for (const l of LEVELS) {
-    if (xp >= l.xp) level = l;
+  let nextLevel = LEVELS[1];
+  for (let i = 0; i < LEVELS.length; i++) {
+    if (xp >= LEVELS[i].xp) {
+      level = LEVELS[i];
+      nextLevel = LEVELS[i + 1] || null;
+    }
   }
-  return level;
+  return { ...level, nextLevel };
 }
 
 export function addXP(amount) {
@@ -30,6 +35,62 @@ export function addXP(amount) {
     return { levelUp: true, level: newLevel.name };
   }
   return { levelUp: false };
+}
+
+export function purchaseItem(item) {
+  const state = getState();
+  if (state.xp < item.price) return { success: false, reason: 'not-enough-xp' };
+  if (state.purchasedItems.includes(item.id)) return { success: false, reason: 'already-owned' };
+
+  state.xp -= item.price;
+  state.purchasedItems.push(item.id);
+
+  // If it's a theme, also unlock it
+  if (item.themeId && !state.unlockedThemes.includes(item.themeId)) {
+    state.unlockedThemes.push(item.themeId);
+  }
+
+  saveState();
+  return { success: true, remainingXP: state.xp };
+}
+
+export function equipItem(item) {
+  const state = getState();
+  if (item.category === 'skins') state.equippedSkin = item.cssClass;
+  if (item.category === 'celebrations') state.equippedCelebration = item.effectId;
+  if (item.category === 'themes') {
+    state.activeTheme = item.themeId;
+    document.documentElement.setAttribute('data-theme', item.themeId);
+  }
+  saveState();
+}
+
+export function unequipItem(category) {
+  const state = getState();
+  if (category === 'skins') state.equippedSkin = null;
+  if (category === 'celebrations') state.equippedCelebration = null;
+  if (category === 'themes') {
+    state.activeTheme = 'default';
+    document.documentElement.setAttribute('data-theme', 'default');
+  }
+  saveState();
+}
+
+export function isItemOwned(item) {
+  const state = getState();
+  // Owned via purchase
+  if (state.purchasedItems.includes(item.id)) return true;
+  // Themes also unlockable via badges
+  if (item.themeId && state.unlockedThemes.includes(item.themeId)) return true;
+  return false;
+}
+
+export function isItemEquipped(item) {
+  const state = getState();
+  if (item.category === 'skins') return state.equippedSkin === item.cssClass;
+  if (item.category === 'celebrations') return state.equippedCelebration === item.effectId;
+  if (item.category === 'themes') return state.activeTheme === item.themeId;
+  return false;
 }
 
 export function checkBadges() {
