@@ -90,11 +90,11 @@ export function spawnConfetti(count = 30) {
 
 export function showSadie() {
   const overlay = document.createElement('div');
-  overlay.className = 'overlay';
+  overlay.className = 'fixed inset-0 bg-black/70 z-50 flex items-center justify-center animate-fadeIn';
   overlay.innerHTML = `
-    <div class="overlay-content sadie-popup">
-      <img src="${SADIE_SRC}" alt="Sadie">
-      <div class="sadie-popup-text">WOOF! Great job!</div>
+    <div class="bg-surface rounded-2xl p-6 w-[calc(100%-32px)] max-w-[440px] animate-slideUp text-center">
+      <img src="${SADIE_SRC}" alt="Sadie" class="w-[200px] h-[200px] rounded-full object-cover mx-auto mb-3 border-4 border-gold animate-pop">
+      <div class="text-xl font-bold text-gold">WOOF! Great job!</div>
     </div>
   `;
 
@@ -106,10 +106,11 @@ export function showSadie() {
 
 export function showBadgeToast(badge) {
   const toast = document.createElement('div');
-  toast.className = 'badge-toast';
+  toast.className = 'fixed flex items-center gap-2.5 bg-surface border-2 border-gold rounded-2xl px-5 py-3 z-[200] shadow-xl animate-slideUp';
+  toast.style.cssText = `top: calc(20px + env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%);`;
   toast.innerHTML = `
-    <span class="badge-toast-emoji">${badge.emoji}</span>
-    <span class="badge-toast-text">${badge.name} unlocked!</span>
+    <span class="text-3xl">${badge.emoji}</span>
+    <span class="font-semibold">${badge.name} unlocked!</span>
   `;
 
   document.body.appendChild(toast);
@@ -118,7 +119,8 @@ export function showBadgeToast(badge) {
 
 export function showXPPopup(text) {
   const popup = document.createElement('div');
-  popup.className = 'xp-popup';
+  popup.className = 'fixed z-[150] pointer-events-none text-2xl font-extrabold text-gold animate-pop';
+  popup.style.cssText = 'top: 40%; left: 50%; transform: translate(-50%, -50%); text-shadow: 0 2px 8px rgba(0,0,0,0.5);';
   popup.textContent = text;
 
   document.body.appendChild(popup);
@@ -127,14 +129,14 @@ export function showXPPopup(text) {
 
 export function showReward(amount, title, subtitle) {
   const overlay = document.createElement('div');
-  overlay.className = 'overlay reward-receipt';
+  overlay.className = 'fixed inset-0 bg-black/70 z-50 flex items-center justify-center animate-fadeIn';
   overlay.innerHTML = `
-    <div class="overlay-content">
-      <div class="reward-title">${title}</div>
-      <div class="reward-amount">${amount}</div>
-      <div class="reward-subtitle">${subtitle}</div>
-      <div class="reward-timestamp">${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}</div>
-      <button class="reward-dismiss" id="reward-dismiss">Awesome!</button>
+    <div class="bg-gradient-to-br from-surface to-surface2 rounded-2xl p-6 w-[calc(100%-32px)] max-w-[440px] animate-slideUp text-center border-2 border-gold">
+      <div class="text-xl font-bold mb-1">${title}</div>
+      <div class="text-5xl font-extrabold text-gold my-4">${amount}</div>
+      <div class="text-sm text-txt2 mb-1">${subtitle}</div>
+      <div class="text-xs text-txt2 mb-4">${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}</div>
+      <button class="px-8 py-3 rounded-xl bg-gold text-black font-semibold min-h-[44px] active:scale-95 transition-transform" id="reward-dismiss">Awesome!</button>
     </div>
   `;
 

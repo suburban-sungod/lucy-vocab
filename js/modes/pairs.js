@@ -29,34 +29,34 @@ registerMode('pairs', {
 
       let selected = null;
       let matchedCount = 0;
-      const startTime = Date.now();
 
       container.innerHTML = `
-        <div class="progress-dots">
+        <div class="flex gap-1.5 justify-center py-3">
           ${Array.from({ length: questionCount }, (_, i) => {
-            let cls = '';
-            if (i < slotsUsed) cls = results[i] ? 'correct' : 'wrong';
-            else if (i === slotsUsed) cls = 'active';
-            return `<div class="progress-dot ${cls}"></div>`;
+            let cls = 'bg-surface2';
+            if (i < slotsUsed) cls = results[i] ? 'bg-green' : 'bg-red';
+            else if (i === slotsUsed) cls = 'bg-accent animate-pulse';
+            return `<div class="w-2.5 h-2.5 rounded-full ${cls}"></div>`;
           }).join('')}
         </div>
-        <div class="pairs-board" id="pairs-board">
-          ${tiles.map((t, i) => `<button class="pairs-tile" data-index="${i}" data-hanzi="${t.word.hanzi}" data-type="${t.type}">${t.text}</button>`).join('')}
+        <div class="grid grid-cols-4 gap-2.5 py-3 max-w-[400px] mx-auto w-full" id="pairs-board">
+          ${tiles.map((t, i) => `<button class="pairs-tile min-h-[64px] p-2.5 rounded-xl bg-surface text-txt text-sm font-medium text-center flex items-center justify-center border-2 border-transparent transition-all break-words" data-index="${i}" data-hanzi="${t.word.hanzi}" data-type="${t.type}">${t.text}</button>`).join('')}
         </div>
       `;
 
       const board = container.querySelector('#pairs-board');
-      const tileEls = board.querySelectorAll('.pairs-tile');
 
       board.addEventListener('click', (e) => {
         const tile = e.target.closest('.pairs-tile');
-        if (!tile || tile.classList.contains('matched')) return;
+        if (!tile || tile.classList.contains('pairs-tile-matched')) return;
 
         if (selected === null) {
           selected = tile;
-          tile.classList.add('selected');
+          tile.classList.remove('border-transparent');
+          tile.classList.add('border-accent', 'bg-[var(--accent-soft)]');
         } else if (tile === selected) {
-          tile.classList.remove('selected');
+          tile.classList.remove('border-accent', 'bg-[var(--accent-soft)]');
+          tile.classList.add('border-transparent');
           selected = null;
         } else {
           const h1 = selected.dataset.hanzi;
@@ -66,9 +66,9 @@ registerMode('pairs', {
 
           if (h1 === h2 && t1 !== t2) {
             // Correct match
-            selected.classList.remove('selected');
-            selected.classList.add('matched');
-            tile.classList.add('matched');
+            selected.classList.remove('border-accent', 'bg-[var(--accent-soft)]');
+            selected.classList.add('pairs-tile-matched');
+            tile.classList.add('pairs-tile-matched');
             matchedCount++;
             slotsUsed++;
             results.push(true);
@@ -82,14 +82,13 @@ registerMode('pairs', {
             selected = null;
 
             if (matchedCount >= 4) {
-              const elapsed = (Date.now() - startTime) / 1000;
               setTimeout(() => renderBoard(), 400);
             }
           } else {
             // Wrong match
-            selected.classList.remove('selected');
-            selected.classList.add('wrong');
-            tile.classList.add('wrong');
+            selected.classList.remove('border-accent', 'bg-[var(--accent-soft)]');
+            selected.classList.add('border-red', 'animate-shake');
+            tile.classList.add('border-red', 'animate-shake');
             slotsUsed++;
             results.push(false);
 
@@ -98,9 +97,12 @@ registerMode('pairs', {
               onAnswer(false, word);
             }
 
+            const prevSelected = selected;
             setTimeout(() => {
-              selected?.classList.remove('wrong');
-              tile.classList.remove('wrong');
+              prevSelected.classList.remove('border-red', 'animate-shake');
+              prevSelected.classList.add('border-transparent');
+              tile.classList.remove('border-red', 'animate-shake');
+              tile.classList.add('border-transparent');
             }, 400);
 
             selected = null;

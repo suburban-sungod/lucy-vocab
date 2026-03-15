@@ -1,41 +1,52 @@
+/* Themes: override CSS custom properties per theme */
+
 [data-theme="sakura"] {
   --bg: #1a0f14;
-  --accent: #e8789a;
+  --accent: #f472b6;
   --surface: #2a1520;
   --surface2: #3a2030;
+  --text: #fce7f3;
+  --text2: #b0708a;
 }
 
 [data-theme="ocean"] {
-  --bg: #0a1520;
-  --accent: #3db8e8;
-  --surface: #102030;
-  --surface2: #183040;
+  --bg: #0c1929;
+  --accent: #38bdf8;
+  --surface: #172a3f;
+  --surface2: #1e3a5f;
+  --text: #e0f2fe;
+  --text2: #7da8c8;
 }
 
 [data-theme="sunset"] {
   --bg: #1a120a;
-  --accent: #e87830;
+  --accent: #fb923c;
   --surface: #2a1a10;
   --surface2: #3a2818;
+  --text: #fff7ed;
+  --text2: #b8906a;
 }
 
 [data-theme="neon"] {
   --bg: #0a0a0a;
-  --accent: #00e676;
+  --accent: #34d399;
   --surface: #141414;
   --surface2: #1e1e1e;
+  --text: #ecfdf5;
+  --text2: #6ee7b7;
 }
 
 [data-theme="midnight"] {
   --bg: #0e0e1e;
-  --accent: #8888cc;
+  --accent: #a5b4fc;
   --surface: #181830;
   --surface2: #222240;
+  --text: #e8e8f8;
+  --text2: #7878aa;
 }
 
-/* Derived accent variants using color-mix */
+/* Derived accent variants */
 [data-theme] {
   --accent-soft: color-mix(in srgb, var(--accent) 20%, transparent);
   --accent-medium: color-mix(in srgb, var(--accent) 40%, transparent);
-  --accent-bright: color-mix(in srgb, var(--accent) 80%, white);
 }

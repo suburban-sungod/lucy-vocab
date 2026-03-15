@@ -105,7 +105,7 @@ function runSessionStep() {
   if (!info) return;
 
   practiceScreen.innerHTML = `
-    <div class="step-indicator">${info.label}</div>
+    <div class="text-center text-sm text-txt2 py-3 tracking-wider uppercase shrink-0">${info.label}</div>
     <div id="practice-content"></div>
   `;
 
@@ -243,7 +243,7 @@ function handleKeyboard(e) {
   } else if (info.step === 'practice') {
     if (['Digit1', 'Digit2', 'Digit3', 'Digit4'].includes(e.code)) {
       const idx = parseInt(e.code.slice(5)) - 1;
-      const options = document.querySelectorAll('.quiz-option:not(.disabled)');
+      const options = document.querySelectorAll('.quiz-opt:not(.pointer-events-none)');
       if (options[idx]) options[idx].click();
     }
   } else if (info.step === 'writing') {

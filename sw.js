@@ -1,17 +1,12 @@
-const CACHE_VERSION = 6;
+const CACHE_VERSION = 7;
 const CACHE_NAME = `lucy-vocab-v${CACHE_VERSION}`;
 
 const PRECACHE_URLS = [
   './',
   'index.html',
   'manifest.json',
-  'css/base.css',
+  'css/core.css',
   'css/themes.css',
-  'css/home.css',
-  'css/grid.css',
-  'css/progress.css',
-  'css/practice.css',
-  'css/overlays.css',
   'js/app.js',
   'js/state.js',
   'js/mastery.js',

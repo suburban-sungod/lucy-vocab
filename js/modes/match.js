@@ -36,9 +36,9 @@ registerMode('match', {
 
       if (dir === 'cn-en') {
         if (audioOnly) {
-          promptHTML = '<button class="audio-btn" id="match-audio" style="font-size:2rem;width:64px;height:64px;">&#x1f50a;</button>';
+          promptHTML = '<button class="w-16 h-16 rounded-full bg-surface2 text-txt text-2xl flex items-center justify-center mx-auto active:bg-accent transition-colors" id="match-audio">&#x1f50a;</button>';
         } else {
-          promptHTML = `<span style="font-size:2rem;font-weight:700">${word.hanzi}</span>`;
+          promptHTML = `<span class="text-3xl font-bold">${word.hanzi}</span>`;
         }
         correctAnswer = word.english;
         options = [word, ...distractors].sort(() => Math.random() - 0.5).map(w => w.english);
@@ -47,7 +47,7 @@ registerMode('match', {
         correctAnswer = word.hanzi;
         options = [word, ...distractors].sort(() => Math.random() - 0.5).map(w => w.hanzi);
       } else {
-        promptHTML = `<span style="font-size:1.3rem">${word.pinyin}</span>`;
+        promptHTML = `<span class="text-xl">${word.pinyin}</span>`;
         correctAnswer = word.english;
         options = [word, ...distractors].sort(() => Math.random() - 0.5).map(w => w.english);
       }
@@ -55,38 +55,42 @@ registerMode('match', {
       let timeLeft = 10;
 
       container.innerHTML = `
-        <div class="progress-dots">
+        <div class="flex gap-1.5 justify-center py-3">
           ${Array.from({ length: questionCount }, (_, i) => {
-            let cls = '';
-            if (i < currentQ) cls = results[i] ? 'correct' : 'wrong';
-            else if (i === currentQ) cls = 'active';
-            return `<div class="progress-dot ${cls}"></div>`;
+            let cls = 'bg-surface2';
+            if (i < currentQ) cls = results[i] ? 'bg-green' : 'bg-red';
+            else if (i === currentQ) cls = 'bg-accent animate-pulse';
+            return `<div class="w-2.5 h-2.5 rounded-full ${cls}"></div>`;
           }).join('')}
         </div>
-        <div class="timer-bar"><div class="timer-bar-fill" id="timer-fill" style="width:100%"></div></div>
-        <div class="quiz-prompt">${promptHTML}</div>
-        <div class="quiz-options">
-          ${options.map((opt, i) => `<button class="quiz-option" data-answer="${opt}">${opt}</button>`).join('')}
+        <div class="max-w-[400px] mx-auto w-full h-1 bg-surface2 rounded-full overflow-hidden mb-3">
+          <div class="h-full bg-accent rounded-full timer-fill" id="timer-fill" style="width:100%"></div>
+        </div>
+        <div class="text-xl text-center py-5 px-4 leading-relaxed min-h-[80px] flex items-center justify-center">${promptHTML}</div>
+        <div class="grid grid-cols-2 gap-3 py-4 max-w-[400px] mx-auto w-full">
+          ${options.map(opt => `<button class="quiz-opt min-h-[56px] p-3 rounded-2xl bg-surface text-txt text-lg font-medium text-center flex items-center justify-center border-2 border-transparent active:scale-[0.97] transition-all" data-answer="${opt}">${opt}</button>`).join('')}
         </div>
       `;
 
       if (audioOnly) {
-        // Short delay to ensure DOM is ready — helps iOS autoplay
         setTimeout(() => speakChinese(word.hanzi), 150);
         const audioBtn = container.querySelector('#match-audio');
         if (audioBtn) audioBtn.addEventListener('click', () => speakChinese(word.hanzi));
       }
 
       const timerFill = container.querySelector('#timer-fill');
-      const optBtns = container.querySelectorAll('.quiz-option');
+      const optBtns = container.querySelectorAll('.quiz-opt');
 
       clearInterval(timer);
       timer = setInterval(() => {
         timeLeft -= 0.1;
         const pct = (timeLeft / 10) * 100;
         timerFill.style.width = pct + '%';
-        if (timeLeft <= 3) timerFill.className = 'timer-bar-fill danger';
-        else if (timeLeft <= 5) timerFill.className = 'timer-bar-fill warning';
+        if (timeLeft <= 3) {
+          timerFill.className = 'h-full rounded-full timer-fill bg-red';
+        } else if (timeLeft <= 5) {
+          timerFill.className = 'h-full rounded-full timer-fill bg-gold';
+        }
 
         if (timeLeft <= 0) {
           clearInterval(timer);
@@ -107,9 +111,15 @@ registerMode('match', {
       results.push(correct);
 
       optBtns.forEach(btn => {
-        btn.classList.add('disabled');
-        if (btn.dataset.answer === correctAnswer) btn.classList.add('correct');
-        if (selected && btn.dataset.answer === selected && !correct) btn.classList.add('wrong');
+        btn.classList.add('pointer-events-none', 'opacity-50');
+        if (btn.dataset.answer === correctAnswer) {
+          btn.classList.remove('opacity-50', 'bg-surface', 'border-transparent');
+          btn.classList.add('bg-green', 'text-black', 'border-green');
+        }
+        if (selected && btn.dataset.answer === selected && !correct) {
+          btn.classList.remove('opacity-50', 'bg-surface', 'border-transparent');
+          btn.classList.add('bg-red', 'text-white', 'border-red', 'animate-shake');
+        }
       });
 
       updateWordMastery(word.hanzi, correct);

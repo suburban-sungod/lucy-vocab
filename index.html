@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-  <meta name="theme-color" content="#0f0f1a">
+  <meta name="theme-color" content="#0f172a">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Lucy's Chinese Vocab">
@@ -11,28 +11,49 @@
   <link rel="icon" href="assets/favicon.png">
   <link rel="manifest" href="manifest.json">
   <title>Lucy's Chinese Vocab</title>
-  <link rel="stylesheet" href="css/base.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: 'var(--bg)',
+            surface: 'var(--surface)',
+            surface2: 'var(--surface2)',
+            accent: 'var(--accent)',
+            accent2: 'var(--accent2)',
+            gold: 'var(--gold)',
+            green: 'var(--green)',
+            red: 'var(--red)',
+            txt: 'var(--text)',
+            txt2: 'var(--text2)',
+          },
+          borderRadius: {
+            'card': '16px',
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Text', 'Helvetica Neue', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
   <link rel="stylesheet" href="css/themes.css">
-  <link rel="stylesheet" href="css/home.css">
-  <link rel="stylesheet" href="css/grid.css">
-  <link rel="stylesheet" href="css/progress.css">
-  <link rel="stylesheet" href="css/practice.css">
-  <link rel="stylesheet" href="css/overlays.css">
+  <link rel="stylesheet" href="css/core.css">
 </head>
-<body>
-  <div id="app">
-    <div id="top-bar"></div>
+<body class="bg-bg text-txt font-sans antialiased select-none">
+  <div id="app" class="max-w-[480px] mx-auto h-dvh flex flex-col relative overflow-hidden" style="padding-top: env(safe-area-inset-top, 0px);">
+    <div id="top-bar" class="shrink-0"></div>
     <div id="screen-home" class="screen active"></div>
     <div id="screen-grid" class="screen"></div>
     <div id="screen-progress" class="screen"></div>
     <div id="screen-practice" class="screen"></div>
     <div id="overlay-container"></div>
-    <div id="bottom-nav"></div>
+    <div id="bottom-nav" class="shrink-0"></div>
   </div>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js').then(reg => {
-        // Check for updates immediately, then every 60s
         reg.update();
         setInterval(() => reg.update(), 60000);
 
@@ -40,7 +61,6 @@
           const newWorker = reg.installing;
           newWorker.addEventListener('statechange', () => {
             if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              // New version ready — activate it
               newWorker.postMessage({ type: 'SKIP_WAITING' });
             }
           });
