@@ -67,7 +67,7 @@ function refreshScreen() {
   switch (currentScreen) {
     case 'home':
       renderHome(container, {
-        onStartSession: () => beginSession()
+        onStartSession: (options) => beginSession(options)
       });
       break;
     case 'grid':
@@ -81,8 +81,8 @@ function refreshScreen() {
   }
 }
 
-function beginSession() {
-  startSession();
+function beginSession(options = {}) {
+  startSession(null, options);
   hideNav();
   runSessionStep();
 }
@@ -178,7 +178,7 @@ function runSessionStep() {
 
     renderResults(results, {
       onDone: () => showScreen('home'),
-      onAgain: () => beginSession()
+      onAgain: () => showScreen('home')
     });
 
     if (results.correct > 0 && results.total > 0) {

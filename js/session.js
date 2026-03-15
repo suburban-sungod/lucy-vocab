@@ -15,7 +15,7 @@ export function setSessionEndCallback(cb) {
   onSessionEnd = cb;
 }
 
-export function startSession(miniDrill = null) {
+export function startSession(miniDrill = null, options = {}) {
   if (miniDrill) {
     session = {
       type: 'mini-drill',
@@ -26,18 +26,41 @@ export function startSession(miniDrill = null) {
     return session;
   }
 
-  const flashcardWords = selectPriorityWords(5);
+  const wordSet = options.wordSet || null;
+  const selectedModes = options.modes || null;
+
+  // Build step sequence from selected modes
+  const hasFlashcard = !selectedModes || selectedModes.includes('flashcard');
+  const hasWriting = !selectedModes || selectedModes.includes('writing');
+  const practiceModes = selectedModes
+    ? selectedModes.filter(m => m !== 'flashcard' && m !== 'writing')
+    : [...MODES_ROTATION];
+
+  // If only flashcard/writing selected with no practice modes, that's fine
+  const practiceRounds = practiceModes.length > 0
+    ? Array.from({ length: 3 }, (_, i) => practiceModes[i % practiceModes.length])
+    : [];
+
+  const flashcardWords = hasFlashcard ? selectPriorityWords(5, [], wordSet) : [];
   const flashcardHanzi = flashcardWords.map(w => w.hanzi);
-  const writingWords = selectPriorityWords(5, flashcardHanzi);
+  const writingWords = hasWriting ? selectPriorityWords(5, flashcardHanzi, wordSet) : [];
+
+  // Determine first step
+  let firstStep = 'results';
+  if (hasFlashcard) firstStep = 'flashcard';
+  else if (practiceRounds.length > 0) firstStep = 'practice';
+  else if (hasWriting) firstStep = 'writing';
 
   session = {
     type: 'full',
-    step: 'flashcard',
+    step: firstStep,
     flashcardWords,
     writingWords,
-    modeRotation: [...MODES_ROTATION],
+    hasFlashcard,
+    hasWriting,
+    modeRotation: practiceRounds,
     currentRound: 0,
-    practiceRounds: [{}, {}, {}],
+    practiceRounds: practiceRounds.map(() => ({})),
     writingAttempts: {},
     results: { correct: 0, total: 0, mistakes: [], xpEarned: 0 }
   };
@@ -53,22 +76,31 @@ export function getCurrentStepInfo() {
     return { label: steps[session.step] || session.step, step: session.step };
   }
 
+  // Count total steps for labelling
+  const steps = [];
+  if (session.hasFlashcard) steps.push('flashcard');
+  for (let i = 0; i < session.modeRotation.length; i++) steps.push('practice');
+  if (session.hasWriting) steps.push('writing');
+
   if (session.step === 'flashcard') {
-    return { label: 'Step 1 of 3: Flashcard Review', step: 'flashcard' };
+    const stepNum = 1;
+    return { label: `Step ${stepNum} of ${steps.length}: Flashcard Review`, step: 'flashcard' };
   }
   if (session.step === 'practice') {
     const mode = session.modeRotation[session.currentRound];
     const modeConfig = getMode(mode);
     const modeName = modeConfig ? modeConfig.name : mode;
+    const stepNum = (session.hasFlashcard ? 1 : 0) + session.currentRound + 1;
     return {
-      label: `Round ${session.currentRound + 1} of 3: ${modeName}`,
+      label: `Step ${stepNum} of ${steps.length}: ${modeName}`,
       step: 'practice',
       mode,
       round: session.currentRound
     };
   }
   if (session.step === 'writing') {
-    return { label: 'Step 3 of 3: Writing Practice', step: 'writing' };
+    const stepNum = steps.length;
+    return { label: `Step ${stepNum} of ${steps.length}: Writing Practice`, step: 'writing' };
   }
   if (session.step === 'results') {
     return { label: 'Results', step: 'results' };
@@ -92,12 +124,18 @@ export function advanceStep() {
   }
 
   if (session.step === 'flashcard') {
-    session.step = 'practice';
-    session.currentRound = 0;
+    if (session.modeRotation.length > 0) {
+      session.step = 'practice';
+      session.currentRound = 0;
+    } else if (session.hasWriting) {
+      session.step = 'writing';
+    } else {
+      session.step = 'results';
+    }
   } else if (session.step === 'practice') {
     session.currentRound++;
-    if (session.currentRound >= 3) {
-      session.step = 'writing';
+    if (session.currentRound >= session.modeRotation.length) {
+      session.step = session.hasWriting ? 'writing' : 'results';
     }
   } else if (session.step === 'writing') {
     session.step = 'results';

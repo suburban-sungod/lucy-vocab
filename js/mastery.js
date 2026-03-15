@@ -51,12 +51,13 @@ export function updateWordMastery(hanzi, correct) {
   return word;
 }
 
-export function selectPriorityWords(count, exclude = []) {
+export function selectPriorityWords(count, exclude = [], wordSet = null) {
   const state = getState();
   const excludeSet = new Set(exclude);
 
   const scored = WORDS
     .filter(w => !excludeSet.has(w.hanzi))
+    .filter(w => !wordSet || w.set === wordSet)
     .map(w => {
       const mastery = state.words[w.hanzi];
       const masteryState = getMasteryState(mastery);
